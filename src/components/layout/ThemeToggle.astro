@@ -1,0 +1,56 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<!-- Hidden until the script runs: without JavaScript the theme follows the system. -->
+<button type="button" class="theme-toggle" aria-pressed="false" data-theme-toggle hidden>
+  {label}
+</button>
+
+<script>
+  const root = document.documentElement;
+
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')) {
+    const sync = () => button.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));
+
+    button.addEventListener('click', () => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        // Storage blocked: the choice lasts for this page only.
+      }
+      sync();
+    });
+
+    sync();
+    button.hidden = false;
+  }
+</script>
+
+<style>
+  .theme-toggle:not([hidden]) {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target-min);
+    min-width: var(--target-min);
+    padding: var(--space-1) var(--space-3);
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+  }
+
+  .theme-toggle[aria-pressed='true'] {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+</style>

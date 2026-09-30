@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getLocalePaths, getPage, t } from '../../i18n/utils';
+
+export const getStaticPaths = getLocalePaths;
+
+const { lang } = Astro.params;
+const { title, description } = await getPage(lang, 'contact');
+const tr = t(lang);
+const email = tr('contact.email');
+---
+
+<BaseLayout title={title} description={description} locale={lang}>
+  <h1>{title}</h1>
+  <p>{description}</p>
+  <p>
+    {tr('contact.emailLabel')} <a href={`mailto:${email}`}>{email}</a>
+  </p>
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+import { t } from '../../i18n/utils';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <p>{t(locale)('footer.placeholder')}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: var(--space-8);
+    padding-block: var(--space-5);
+    border-block-start: var(--border-width) solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  p {
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,10 @@
+01b-*/
+02-*/
+04-*/
+.github/
+dist/
+.astro/
+node_modules/
+test-results/
+playwright-report/
+package-lock.json

@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getLocalePaths, getPage } from '../../i18n/utils';
+
+export const getStaticPaths = getLocalePaths;
+
+const { lang } = Astro.params;
+const { title, description } = await getPage(lang, 'index');
+---
+
+<BaseLayout title={title} description={description} locale={lang}>
+  <h1>{title}</h1>
+  <p>{description}</p>
+</BaseLayout>

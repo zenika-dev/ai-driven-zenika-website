@@ -1,0 +1,66 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { t } from '../../i18n/utils';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import Nav from './Nav.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+const tr = t(locale);
+---
+
+<header class="site-header">
+  <div class="container inner">
+    <a class="brand" href={getRelativeLocaleUrl(locale)}>
+      {tr('site.name')}
+    </a>
+    <Nav locale={locale} />
+    <div class="tools">
+      <LanguageSwitcher locale={locale} />
+      <ThemeToggle label={tr('theme.toggle')} />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    /* Shared between pages, so it stays in place during page transitions. */
+    view-transition-name: site-header;
+    border-block-end: var(--border-width) solid var(--color-border);
+    background: var(--color-bg);
+  }
+
+  /* Mobile first: items wrap onto a second row, so no menu toggle is needed. */
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-3);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target-min);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+  }
+
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .tools {
+      margin-inline-start: auto;
+    }
+  }
+</style>

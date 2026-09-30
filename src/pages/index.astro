@@ -1,0 +1,7 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getDefaultLocale } from '../i18n/utils';
+
+// Static build: emitted as a meta-refresh page to the default locale.
+return Astro.redirect(getRelativeLocaleUrl(getDefaultLocale()));
+---

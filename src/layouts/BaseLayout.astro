@@ -1,0 +1,80 @@
+---
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
+import Footer from '../components/layout/Footer.astro';
+import Header from '../components/layout/Header.astro';
+import SkipLink from '../components/layout/SkipLink.astro';
+import { getDefaultLocale, getLocales, getPagePath, t } from '../i18n/utils';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: string;
+}
+
+const { title, description, locale } = Astro.props;
+const tr = t(locale);
+
+const pagePath = getPagePath(Astro.url, locale);
+const canonical = getAbsoluteLocaleUrl(locale, pagePath);
+const alternates = getLocales().map((code) => ({
+  code,
+  href: getAbsoluteLocaleUrl(code, pagePath),
+  ogLocale: t(code)('meta.ogLocale'),
+}));
+const defaultHref = getAbsoluteLocaleUrl(getDefaultLocale(), pagePath);
+const siteName = tr('site.name');
+const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map(({ code, href }) => (
+      <link rel="alternate" hreflang={code} href={href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={defaultHref} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={tr('meta.ogLocale')} />
+    {alternates
+      .filter(({ code }) => code !== locale)
+      .map(({ ogLocale }) => (
+        <meta property="og:locale:alternate" content={ogLocale} />
+      ))}
+
+    <!-- Applies the stored or system theme before first paint, so the page never flashes. -->
+    <script is:inline>
+      (() => {
+        let theme = null;
+        try {
+          theme = localStorage.getItem('theme');
+        } catch {
+          // Storage blocked: fall back to the system preference.
+        }
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <SkipLink label={tr('skipLink')} />
+    <Header locale={locale} />
+    <main id="main" tabindex="-1" class="container">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>

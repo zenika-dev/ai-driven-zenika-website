@@ -1,0 +1,52 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getLocales, getPagePath, t } from '../../i18n/utils';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+const pagePath = getPagePath(Astro.url, locale);
+const options = getLocales().map((code) => ({
+  code,
+  href: getRelativeLocaleUrl(code, pagePath),
+  label: t(code)('lang.name'),
+  current: code === locale,
+}));
+---
+
+<nav aria-label={t(locale)('langSwitcher.label')}>
+  <ul>
+    {options.map(({ code, href, label, current }) => (
+      <li>
+        <a href={href} lang={code} hreflang={code} aria-current={current ? 'true' : undefined}>
+          {label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target-min);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+  }
+
+  a:hover,
+  a[aria-current='true'] {
+    text-decoration: underline;
+  }
+</style>
