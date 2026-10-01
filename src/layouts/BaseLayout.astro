@@ -72,7 +72,7 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
   <body>
     <SkipLink label={tr('skipLink')} />
     <Header locale={locale} />
-    <main id="main" tabindex="-1" class="container">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer locale={locale} />

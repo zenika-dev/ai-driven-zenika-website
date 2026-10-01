@@ -1,0 +1,86 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  items: { title: string; text: string }[];
+}
+
+const { eyebrow, heading, intro, items } = Astro.props;
+const glows = ['brand', 'indigo', 'teal'] as const;
+---
+
+<section id="approach" class="section section--inverse" aria-labelledby="approach-title">
+  <div class="container">
+    <SectionHeading id="approach-title" eyebrow={eyebrow} heading={heading} intro={intro} />
+    <ul class="cards">
+      {items.map(({ title, text }, i) => (
+        <li class:list={['card', glows[i % glows.length]]}>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .section :global(h2) {
+    max-width: 24ch;
+  }
+
+  .cards {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Decorative corner glow, as in the mockup; text stays on the flat surface colour. */
+  .card {
+    --glow: var(--brand-red);
+    min-height: 11rem;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(
+        60% 70% at 100% 100%,
+        color-mix(in srgb, var(--glow) 55%, transparent),
+        transparent 70%
+      ),
+      var(--color-surface);
+  }
+
+  .indigo {
+    --glow: var(--brand-indigo);
+  }
+
+  .teal {
+    --glow: var(--brand-teal);
+  }
+
+  h3 {
+    margin-block-end: var(--space-5);
+  }
+
+  p {
+    max-width: 30ch;
+    margin: 0;
+    color: var(--color-inverse-text-soft);
+    font-size: var(--font-size-sm);
+  }
+
+  @media (min-width: 1024px) {
+    .cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+
+    .card {
+      min-height: 15rem;
+    }
+  }
+</style>

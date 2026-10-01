@@ -1,0 +1,87 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  items: { kind: string; title: string }[];
+}
+
+const { eyebrow, heading, intro, items } = Astro.props;
+const gradients = ['orange', 'purple', 'blue'] as const;
+---
+
+<section id="publications" class="section" aria-labelledby="publications-title">
+  <div class="container">
+    <SectionHeading id="publications-title" eyebrow={eyebrow} heading={heading} intro={intro} />
+    <!-- Not links in the MVP: the Publications page is hidden. -->
+    <ul class="cards">
+      {items.map(({ kind, title }, i) => (
+        <li class:list={['card', gradients[i % gradients.length]]}>
+          <p class="kind">{kind}</p>
+          <h3>{title}</h3>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cards {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    min-height: 10rem;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+  }
+
+  /* Text colours are fixed per gradient (not themed) so contrast holds in both themes. */
+  .orange {
+    background: var(--gradient-orange);
+    color: var(--brand-ink);
+  }
+
+  .purple {
+    background: var(--gradient-purple);
+    color: var(--color-on-brand);
+  }
+
+  .blue {
+    background: var(--gradient-blue);
+    color: var(--brand-ink);
+  }
+
+  .kind {
+    margin: 0 0 var(--space-3);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin: 0;
+    max-width: 22ch;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-black);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  @media (min-width: 1024px) {
+    .cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+
+    .card {
+      min-height: 19rem;
+    }
+  }
+</style>

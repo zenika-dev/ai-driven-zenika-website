@@ -1,0 +1,87 @@
+---
+import Button from '../ui/Button.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+
+/** "Parlons-nous" block. h1 on the Contact page, h2 at the end of the Presentation page. */
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  ctaLabel: string;
+  email: string;
+  emailLabel: string;
+  level?: 1 | 2;
+}
+
+const { eyebrow, heading, intro, ctaLabel, email, emailLabel, level = 2 } = Astro.props;
+const Heading = level === 1 ? 'h1' : 'h2';
+---
+
+<section
+  id="contact"
+  class:list={['section', 'section--inverse', 'contact', { page: level === 1 }]}
+  aria-labelledby="contact-title"
+>
+  <div class="container grid">
+    <div>
+      <Eyebrow text={eyebrow} />
+      <Heading id="contact-title">{heading}</Heading>
+      <p class="intro">{intro}</p>
+    </div>
+    <div class="action">
+      <Button href={`mailto:${email}`} variant="primary">
+        {ctaLabel}
+      </Button>
+      <p class="email">
+        {emailLabel} <a href={`mailto:${email}`}>{email}</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact.page {
+    display: flex;
+    align-items: center;
+    min-height: 60vh;
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .contact :global(h1),
+  .contact :global(h2) {
+    max-width: 16ch;
+    font-size: var(--font-size-2xl);
+  }
+
+  .intro {
+    margin: 0;
+    color: var(--color-inverse-muted);
+  }
+
+  .action {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-4);
+  }
+
+  .email {
+    margin: 0;
+    color: var(--color-inverse-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .action {
+      justify-items: end;
+    }
+  }
+</style>

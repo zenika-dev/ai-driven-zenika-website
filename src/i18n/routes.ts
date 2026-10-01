@@ -7,7 +7,10 @@ export const pages = ['index', 'expertise', 'clients', 'publications', 'contact'
 export type Page = (typeof pages)[number];
 
 /** Pages shown in the main navigation, in order. The others exist but are hidden. */
-export const navPages = ['index', 'contact'] as const satisfies readonly Page[];
+export const navPages = ['index'] as const satisfies readonly Page[];
+
+/** Page the header call-to-action button links to. */
+export const ctaPage: Page = 'contact';
 
 export type NavPage = (typeof navPages)[number];
 

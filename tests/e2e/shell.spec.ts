@@ -1,8 +1,9 @@
 import { expect, test } from '@playwright/test';
-import { navPages } from '../../src/i18n/routes';
-import { locales, pageUrl } from '../helpers/routes';
+import { ctaPage, navPages } from '../../src/i18n/routes';
+import { defaultLocale, locales, pageUrl } from '../helpers/routes';
 
-const [firstLocale = 'en', otherLocale = firstLocale] = locales;
+const firstLocale = defaultLocale;
+const otherLocale = locales.find((locale) => locale !== defaultLocale) ?? defaultLocale;
 
 test('skip link is the first focusable element and moves focus to main', async ({
   page,
@@ -18,17 +19,23 @@ test('skip link is the first focusable element and moves focus to main', async (
   await expect(page.locator('main#main')).toBeFocused();
 });
 
-test('main nav lists only the nav pages and marks the current one', async ({ page }) => {
-  await page.goto(pageUrl(firstLocale, 'contact'));
-  const links = page.locator('header nav').first().getByRole('link');
+test('main nav lists only the nav pages; the CTA marks the contact page', async ({ page }) => {
+  await page.goto(pageUrl(firstLocale, ctaPage));
+  // The main nav is hidden below 640px (the logo links home), so count it without visibility.
+  const links = page.locator('header nav.main-nav a');
   await expect(links).toHaveCount(navPages.length);
   for (const [i, navPage] of navPages.entries()) {
     await expect(links.nth(i)).toHaveAttribute('href', pageUrl(firstLocale, navPage));
   }
   await expect(page.locator('header a[aria-current="page"]')).toHaveAttribute(
     'href',
-    pageUrl(firstLocale, 'contact'),
+    pageUrl(firstLocale, ctaPage),
   );
+});
+
+test('icon-only theme toggle has an accessible name', async ({ page }) => {
+  await page.goto(pageUrl(firstLocale, 'index'));
+  await expect(page.locator('[data-theme-toggle]')).toHaveAccessibleName(/\S/);
 });
 
 test('language switcher links to the same page in every locale', async ({ page }) => {
@@ -52,12 +59,13 @@ test.describe('without JavaScript', () => {
     );
     expect(overflow).toBeLessThanOrEqual(0);
 
-    for (const link of await page.locator('header a').all()) {
-      await expect(link).toBeVisible();
+    const visibleLinks = await page.locator('header a:visible').all();
+    expect(visibleLinks.length).toBeGreaterThan(0);
+    for (const link of visibleLinks) {
       await expect(link).toBeInViewport();
     }
 
-    await page.locator(`header nav a[href="${pageUrl(firstLocale, 'contact')}"]`).click();
-    await expect(page).toHaveURL(pageUrl(firstLocale, 'contact'));
+    await page.locator(`header a[href="${pageUrl(firstLocale, ctaPage)}"]`).click();
+    await expect(page).toHaveURL(pageUrl(firstLocale, ctaPage));
   });
 });

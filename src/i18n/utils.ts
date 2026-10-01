@@ -41,3 +41,18 @@ export async function getPage(lang: string, page: Page) {
 export function getPagePath(url: URL, locale: string): string {
   return url.pathname.slice(getRelativeLocaleUrl(locale).length);
 }
+
+/** Presentation page copy, including every section. Fails the build if a section is missing. */
+export async function getPresentation(lang: string) {
+  const { presentation, ...page } = await getPage(lang, 'index');
+  if (!presentation)
+    throw new Error(`Missing "presentation" in src/content/pages/${lang}/index.md`);
+  return { ...page, presentation };
+}
+
+/** "Parlons-nous" copy, shared by the Contact page and the Presentation page. */
+export async function getContact(lang: string) {
+  const { contact, ...page } = await getPage(lang, 'contact');
+  if (!contact) throw new Error(`Missing "contact" in src/content/pages/${lang}/contact.md`);
+  return { ...page, contact };
+}

@@ -1,0 +1,21 @@
+---
+/** Small red section label, e.g. "01 / Qui sommes-nous". */
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<p class="eyebrow">{text}</p>
+
+<style>
+  .eyebrow {
+    margin: 0 0 var(--space-4);
+    color: var(--color-brand-text);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+</style>

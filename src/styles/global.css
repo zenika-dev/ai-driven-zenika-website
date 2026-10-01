@@ -11,6 +11,12 @@ html {
   text-size-adjust: 100%;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -25,22 +31,31 @@ body {
 
 main {
   flex: 1;
-  padding-block: var(--space-6);
 }
 
 h1,
 h2,
 h3 {
-  line-height: var(--line-height-tight);
   margin-block: 0 var(--space-4);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--line-height-tight);
+  text-wrap: balance;
 }
 
 h1 {
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-3xl);
 }
 
 h2 {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-2xl);
+}
+
+h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: normal;
+  line-height: var(--line-height-snug);
 }
 
 p {
@@ -68,9 +83,40 @@ a:hover {
 
 .container {
   width: 100%;
-  max-width: var(--layout-max-width);
+  max-width: calc(var(--layout-max-width) + 2 * var(--layout-gutter));
   margin-inline: auto;
   padding-inline: var(--layout-gutter);
+}
+
+/* Full-width page bands. Each section holds its own .container. */
+.section {
+  padding-block: var(--section-padding);
+  scroll-margin-top: var(--header-height);
+}
+
+.section--alt {
+  background: var(--color-bg-alt);
+}
+
+.section--inverse {
+  background: var(--color-inverse-bg);
+  color: var(--color-inverse-text);
+  --color-text: var(--color-inverse-text);
+  --color-text-muted: var(--color-inverse-muted);
+  --color-brand-text: var(--color-inverse-brand);
+  --color-surface: var(--color-inverse-surface);
+  --color-border: var(--color-inverse-border);
+  --color-link: var(--color-inverse-text);
+  --color-focus: var(--color-inverse-text);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* Page transitions: native cross-document View Transitions, no client-side router.

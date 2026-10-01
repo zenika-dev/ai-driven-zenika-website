@@ -1,6 +1,8 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { ctaPage, pagePath } from '../../i18n/routes';
 import { t } from '../../i18n/utils';
+import Button from '../ui/Button.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import Nav from './Nav.astro';
 import ThemeToggle from './ThemeToggle.astro';
@@ -11,6 +13,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const tr = t(locale);
+const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
 ---
 
 <header class="site-header">
@@ -22,24 +25,35 @@ const tr = t(locale);
     <div class="tools">
       <LanguageSwitcher locale={locale} />
       <ThemeToggle label={tr('theme.toggle')} />
+      <Button
+        href={ctaHref}
+        size="sm"
+        aria-current={Astro.url.pathname === ctaHref ? 'page' : undefined}
+      >
+        <span class="cta-long">{tr('header.cta')}</span>
+        <span class="cta-short">{tr('header.ctaShort')}</span>
+      </Button>
     </div>
   </div>
 </header>
 
 <style>
   .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 10;
+    background: var(--color-bg);
+    border-block-end: var(--border-width) solid var(--color-border);
     /* Shared between pages, so it stays in place during page transitions. */
     view-transition-name: site-header;
-    border-block-end: var(--border-width) solid var(--color-border);
-    background: var(--color-bg);
   }
 
-  /* Mobile first: items wrap onto a second row, so no menu toggle is needed. */
   .inner {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-2) var(--space-5);
+    gap: var(--space-2) var(--space-6);
+    min-height: var(--header-height);
     padding-block: var(--space-3);
   }
 
@@ -47,20 +61,31 @@ const tr = t(locale);
     display: inline-flex;
     align-items: center;
     min-height: var(--target-min);
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-black);
+    letter-spacing: var(--tracking-tight);
     text-decoration: none;
+    text-transform: lowercase;
   }
 
   .tools {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-3);
+    margin-inline-start: auto;
+  }
+
+  .cta-long {
+    display: none;
   }
 
   @media (min-width: 640px) {
-    .tools {
-      margin-inline-start: auto;
+    .cta-long {
+      display: inline;
+    }
+
+    .cta-short {
+      display: none;
     }
   }
 </style>

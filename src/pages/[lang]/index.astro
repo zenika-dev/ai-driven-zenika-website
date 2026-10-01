@@ -1,14 +1,35 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import About from '../../components/sections/About.astro';
+import Approach from '../../components/sections/Approach.astro';
+import Clients from '../../components/sections/Clients.astro';
+import ContactCta from '../../components/sections/ContactCta.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Offers from '../../components/sections/Offers.astro';
+import Publications from '../../components/sections/Publications.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getLocalePaths, getPage } from '../../i18n/utils';
+import { ctaPage, pagePath } from '../../i18n/routes';
+import { getContact, getLocalePaths, getPresentation, t } from '../../i18n/utils';
 
 export const getStaticPaths = getLocalePaths;
 
 const { lang } = Astro.params;
-const { title, description } = await getPage(lang, 'index');
+const tr = t(lang);
+const { title, description, presentation } = await getPresentation(lang);
+const { contact } = await getContact(lang);
+const { hero, about, offers, approach, clients, publications } = presentation;
 ---
 
 <BaseLayout title={title} description={description} locale={lang}>
-  <h1>{title}</h1>
-  <p>{description}</p>
+  <Hero
+    {...hero}
+    primaryCta={{ label: hero.primaryCta, href: getRelativeLocaleUrl(lang, pagePath(ctaPage)) }}
+    secondaryCta={{ label: hero.secondaryCta, href: '#about' }}
+  />
+  <About {...about} />
+  <Offers {...offers} />
+  <Approach {...approach} />
+  <Clients {...clients} />
+  <Publications {...publications} />
+  <ContactCta {...contact} email={tr('contact.email')} emailLabel={tr('contact.emailLabel')} />
 </BaseLayout>

@@ -2,21 +2,56 @@
  * Design tokens. Components use only var(--token).
  * Light values on :root, dark values on [data-theme="dark"] (set by the inline
  * theme script) and under prefers-color-scheme for visitors without JavaScript.
+ *
+ * Values are SAMPLED FROM MOCKUP PNG (02-static-prototyping/presentation-page/
+ * reference-mockup.png) — confirm against Figma. Where the mockup fails WCAG AA,
+ * the nearest passing value is used and the mockup value is noted.
  */
 
 :root {
-  /* Colour — PLACEHOLDER — replace from Figma */
+  /* Brand palette — SAMPLED FROM MOCKUP PNG — confirm against Figma */
+  --brand-red: #e31128; /* mockup #ee2238: 4.0–4.3:1 on light, fails AA for small text */
+  --brand-red-bright: #ee2238;
+  --brand-ink: #0b0b0f;
+  --brand-ink-raised: #16161d;
+  --brand-cream: #faf9f6;
+  --brand-teal: #06c3a2;
+  --brand-indigo: #8185ea;
+  --gradient-orange: linear-gradient(135deg, #ffa27c, #ffc44f);
+  --gradient-purple: linear-gradient(135deg, #7e5fe2, #7657d8); /* mockup start #8c70e5 */
+  --gradient-blue: linear-gradient(135deg, #4a93e9, #4cb2de);
+
+  /* Colour, light theme — SAMPLED FROM MOCKUP PNG — confirm against Figma */
   --color-bg: #ffffff;
-  --color-surface: #f4f4f4;
-  --color-text: #1a1a1a;
-  --color-text-muted: #595959;
-  --color-border: #767676;
-  --color-link: #1a1a1a;
-  --color-link-hover: #000000;
-  --color-focus: #1a1a1a;
+  --color-bg-alt: var(--brand-cream);
+  --color-surface: var(--brand-cream);
+  --color-surface-2: #f3f4f6;
+  --color-text: var(--brand-ink);
+  --color-text-muted: #5e5e5e;
+  --color-border: #e5e7eb;
+  --color-link: var(--brand-ink);
+  --color-link-hover: var(--brand-red);
+  --color-focus: var(--brand-ink);
+  --color-brand-text: var(--brand-red);
+  --color-teal-text: #04806b; /* mockup #06c3a2: 2.1:1 */
+  --color-indigo-text: #5e63e4; /* mockup #8185ea: 3.1:1 */
+  --color-tint-brand: #f9e3e3;
+  --color-tint-brand-text: #d01025;
+  --color-tint-teal: #e1f3ed;
+  --color-tint-teal-text: #047b66;
+  --color-tint-indigo: #eeedf5;
+  --color-tint-indigo-text: #555be3;
+  --color-inverse-bg: var(--brand-ink);
+  --color-inverse-surface: var(--brand-ink-raised);
+  --color-inverse-text: #ffffff;
+  --color-inverse-text-soft: #e2e2e3;
+  --color-inverse-muted: #858587;
+  --color-inverse-brand: var(--brand-red-bright);
+  --color-inverse-border: #2a2a2d;
+  --color-on-brand: #ffffff;
   color-scheme: light;
 
-  /* Spacing — PLACEHOLDER — replace from Figma */
+  /* Spacing — measured from mockup PNG — confirm against Figma */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -25,67 +60,121 @@
   --space-6: 2rem;
   --space-7: 3rem;
   --space-8: 4rem;
+  --space-9: 6rem;
+  --section-padding: clamp(var(--space-8), 8vw, 8.5rem);
 
-  /* Type — PLACEHOLDER — replace from Figma */
+  /* Type — font family PENDING Figma (system stack until confirmed) */
   --font-family-base:
     system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
-  --font-size-lg: 1.25rem;
+  --font-size-lg: 1.125rem;
   --font-size-xl: 1.5rem;
-  --font-size-2xl: 2rem;
+  --font-size-2xl: clamp(1.75rem, 1.25rem + 2vw, 2.75rem);
+  --font-size-3xl: clamp(2.25rem, 1.25rem + 4.25vw, 4.25rem);
+  --font-size-stat: clamp(2.5rem, 1.75rem + 2.5vw, 3.5rem);
   --font-weight-regular: 400;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --line-height-tight: 1.2;
-  --line-height-base: 1.5;
+  --font-weight-black: 800;
+  --line-height-tight: 1.1;
+  --line-height-snug: 1.25;
+  --line-height-base: 1.6;
+  --tracking-tight: -0.025em;
+  --tracking-wide: 0.08em;
 
-  /* Radii — PLACEHOLDER — replace from Figma */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
+  /* Radii — measured from mockup PNG — confirm against Figma */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-pill: 999px;
 
-  /* Shadows — PLACEHOLDER — replace from Figma */
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.1);
+  /* Shadows — measured from mockup PNG — confirm against Figma */
+  --shadow-sm: 0 1px 2px rgb(11 11 15 / 0.06);
+  --shadow-md: 0 12px 32px rgb(11 11 15 / 0.12);
 
-  /* Borders and focus — PLACEHOLDER — replace from Figma */
+  /* Borders and focus */
   --border-width: 1px;
   --focus-ring-width: 2px;
-  --focus-ring-offset: 2px;
+  --focus-ring-offset: 3px;
 
-  /* Layout — PLACEHOLDER — replace from Figma */
-  --layout-max-width: 72rem;
-  --layout-gutter: var(--space-4);
+  /* Layout — measured from mockup PNG (1280px content at 1440px) */
+  --layout-max-width: 80rem;
+  --layout-gutter: clamp(var(--space-4), 4vw, var(--space-8));
+  --header-height: 4.5rem;
   --target-min: 1.5rem; /* 24px, WCAG 2.2 target size */
+  --icon-size: 1rem;
+  --icon-button-size: 2.5rem;
 
-  /* Motion — PLACEHOLDER — replace from Figma */
+  /* Motion */
   --duration-fast: 150ms;
   --duration-base: 250ms;
   --easing-standard: cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Dark colour — PLACEHOLDER — replace from Figma.
+/* Dark colour — DERIVED from the mockup's dark sections (no dark design exists yet).
  * Keep both blocks identical; tests/e2e/theme.spec.ts checks they match. */
 :root[data-theme='dark'] {
-  --color-bg: #121212;
-  --color-surface: #1e1e1e;
-  --color-text: #ededed;
-  --color-text-muted: #b3b3b3;
-  --color-border: #8a8a8a;
-  --color-link: #ededed;
-  --color-link-hover: #ffffff;
-  --color-focus: #ededed;
+  --color-bg: var(--brand-ink);
+  --color-bg-alt: #121217;
+  --color-surface: var(--brand-ink-raised);
+  --color-surface-2: #1f1f28;
+  --color-text: #ffffff;
+  --color-text-muted: #9a9aa0;
+  --color-border: #2a2a33;
+  --color-link: #ffffff;
+  --color-link-hover: #ff4d5e;
+  --color-focus: #ffffff;
+  --color-brand-text: #ff4d5e;
+  --color-teal-text: var(--brand-teal);
+  --color-indigo-text: #9a9df0;
+  --color-tint-brand: #2a1418;
+  --color-tint-brand-text: #ff4d5e;
+  --color-tint-teal: #0f2622;
+  --color-tint-teal-text: var(--brand-teal);
+  --color-tint-indigo: #1c1d33;
+  --color-tint-indigo-text: #9a9df0;
+  --color-inverse-bg: var(--brand-ink-raised);
+  --color-inverse-surface: #1f1f28;
+  --color-inverse-text: #ffffff;
+  --color-inverse-text-soft: #e2e2e3;
+  --color-inverse-muted: #9a9aa0;
+  --color-inverse-brand: #ff4d5e;
+  --color-inverse-border: #2a2a33;
+  --color-on-brand: #ffffff;
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --color-bg: #121212;
-    --color-surface: #1e1e1e;
-    --color-text: #ededed;
-    --color-text-muted: #b3b3b3;
-    --color-border: #8a8a8a;
-    --color-link: #ededed;
-    --color-link-hover: #ffffff;
-    --color-focus: #ededed;
+    --color-bg: var(--brand-ink);
+    --color-bg-alt: #121217;
+    --color-surface: var(--brand-ink-raised);
+    --color-surface-2: #1f1f28;
+    --color-text: #ffffff;
+    --color-text-muted: #9a9aa0;
+    --color-border: #2a2a33;
+    --color-link: #ffffff;
+    --color-link-hover: #ff4d5e;
+    --color-focus: #ffffff;
+    --color-brand-text: #ff4d5e;
+    --color-teal-text: var(--brand-teal);
+    --color-indigo-text: #9a9df0;
+    --color-tint-brand: #2a1418;
+    --color-tint-brand-text: #ff4d5e;
+    --color-tint-teal: #0f2622;
+    --color-tint-teal-text: var(--brand-teal);
+    --color-tint-indigo: #1c1d33;
+    --color-tint-indigo-text: #9a9df0;
+    --color-inverse-bg: var(--brand-ink-raised);
+    --color-inverse-surface: #1f1f28;
+    --color-inverse-text: #ffffff;
+    --color-inverse-text-soft: #e2e2e3;
+    --color-inverse-muted: #9a9aa0;
+    --color-inverse-brand: #ff4d5e;
+    --color-inverse-border: #2a2a33;
+    --color-on-brand: #ffffff;
     color-scheme: dark;
   }
 }

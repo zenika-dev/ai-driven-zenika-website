@@ -1,4 +1,6 @@
 ---
+import Icon from '../ui/Icon.astro';
+
 interface Props {
   label: string;
 }
@@ -7,8 +9,16 @@ const { label } = Astro.props;
 ---
 
 <!-- Hidden until the script runs: without JavaScript the theme follows the system. -->
-<button type="button" class="theme-toggle" aria-pressed="false" data-theme-toggle hidden>
-  {label}
+<button
+  type="button"
+  class="theme-toggle"
+  aria-label={label}
+  aria-pressed="false"
+  data-theme-toggle
+  hidden
+>
+  <Icon name="moon" class="moon" />
+  <Icon name="sun" class="sun" />
 </button>
 
 <script>
@@ -35,22 +45,28 @@ const { label } = Astro.props;
 
 <style>
   .theme-toggle:not([hidden]) {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--target-min);
-    min-width: var(--target-min);
-    padding: var(--space-1) var(--space-3);
-    background: var(--color-surface);
+    display: inline-grid;
+    place-items: center;
+    width: var(--icon-button-size);
+    height: var(--icon-button-size);
+    padding: 0;
+    background: transparent;
     color: var(--color-text);
     border: var(--border-width) solid var(--color-border);
-    border-radius: var(--radius-sm);
-    font: inherit;
-    font-size: var(--font-size-sm);
+    border-radius: var(--radius-pill);
     cursor: pointer;
   }
 
-  .theme-toggle[aria-pressed='true'] {
-    background: var(--color-text);
-    color: var(--color-bg);
+  .theme-toggle:hover {
+    background: var(--color-surface);
+  }
+
+  .theme-toggle :global(.sun),
+  .theme-toggle[aria-pressed='true'] :global(.moon) {
+    display: none;
+  }
+
+  .theme-toggle[aria-pressed='true'] :global(.sun) {
+    display: block;
   }
 </style>

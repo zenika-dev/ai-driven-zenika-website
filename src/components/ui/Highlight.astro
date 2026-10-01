@@ -1,0 +1,27 @@
+---
+/** Renders `text` with the `highlight` phrase in the brand colour. Fails the build if the phrase is missing. */
+interface Props {
+  text: string;
+  highlight?: string | undefined;
+}
+
+const { text, highlight } = Astro.props;
+const index = highlight ? text.indexOf(highlight) : -1;
+if (highlight && index === -1) {
+  throw new Error(`Highlight "${highlight}" not found in "${text}"`);
+}
+const parts =
+  highlight && index >= 0
+    ? [text.slice(0, index), highlight, text.slice(index + highlight.length)]
+    : [text, '', ''];
+---
+
+{parts[0]}
+{parts[1] && <span class="highlight">{parts[1]}</span>}
+{parts[2]}
+
+<style>
+  .highlight {
+    color: var(--color-brand-text);
+  }
+</style>

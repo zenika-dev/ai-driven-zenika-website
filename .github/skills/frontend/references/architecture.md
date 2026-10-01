@@ -40,7 +40,7 @@ The root-level folders `01b-product-requirements/`, `02-static-prototyping/` and
 
 ## Pages, Content and i18n
 
-- Locales are defined **only** in the `i18n` block of `astro.config.mjs`. Never hardcode a list of locales anywhere else. Locales at launch: `en` (default) and `fr`. Singapore localisation is undecided.
+- Locales are defined **only** in the `i18n` block of `astro.config.mjs`. Never hardcode a list of locales anywhere else. Locales: `fr` (default, content written in French first) and `en` (English translations follow). Singapore localisation is undecided.
 - Every URL carries a locale prefix (`/en/...`). Use Astro's i18n routing config and `astro:i18n` helpers for locale-aware URLs; never build them by string concatenation.
 - Every page lives in `src/pages/[lang]/` and uses `getStaticPaths` to generate one page per locale.
 - Page copy lives in a content collection: `src/content/pages/{locale}/{page}.md`, with its schema in `src/content.config.ts`.

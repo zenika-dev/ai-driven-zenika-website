@@ -15,7 +15,7 @@ const items = navPages.map((page) => {
 });
 ---
 
-<nav aria-label={tr('nav.label')}>
+<nav class="main-nav" aria-label={tr('nav.label')}>
   <ul>
     {items.map(({ href, label, current }) => (
       <li>
@@ -28,10 +28,15 @@ const items = navPages.map((page) => {
 </nav>
 
 <style>
+  /* Below 640px the logo is the home link and the CTA reaches Contact, as in the mockup. */
+  .main-nav {
+    display: none;
+  }
+
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4);
+    gap: var(--space-5);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -41,11 +46,22 @@ const items = navPages.map((page) => {
     display: inline-flex;
     align-items: center;
     min-height: var(--target-min);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
     text-decoration: none;
   }
 
   a:hover,
   a[aria-current='page'] {
     text-decoration: underline;
+    text-decoration-color: var(--color-brand-text);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.4em;
+  }
+
+  @media (min-width: 640px) {
+    .main-nav {
+      display: block;
+    }
   }
 </style>

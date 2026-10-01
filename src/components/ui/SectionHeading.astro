@@ -1,0 +1,56 @@
+---
+import Eyebrow from './Eyebrow.astro';
+import Highlight from './Highlight.astro';
+
+/** Eyebrow, heading and intro. Heading and intro sit side by side from 1024px. */
+interface Props {
+  id: string;
+  eyebrow: string;
+  heading: string;
+  highlight?: string | undefined;
+  intro?: string | undefined;
+  level?: 1 | 2;
+}
+
+const { id, eyebrow, heading, highlight, intro, level = 2 } = Astro.props;
+const Heading = level === 1 ? 'h1' : 'h2';
+---
+
+<div class="section-heading">
+  <div class="title">
+    <Eyebrow text={eyebrow} />
+    <Heading id={id}>
+      <Highlight text={heading} highlight={highlight} />
+    </Heading>
+  </div>
+  {intro && <p class="intro">{intro}</p>}
+  <slot />
+</div>
+
+<style>
+  .section-heading {
+    display: grid;
+    gap: var(--space-2) var(--space-8);
+    margin-block-end: var(--space-7);
+  }
+
+  .title :global(h1),
+  .title :global(h2) {
+    margin: 0;
+    max-width: 22ch;
+  }
+
+  .intro {
+    margin: 0;
+    max-width: 34rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  @media (min-width: 1024px) {
+    .section-heading {
+      grid-template-columns: 1fr minmax(0, 26rem);
+      align-items: end;
+    }
+  }
+</style>

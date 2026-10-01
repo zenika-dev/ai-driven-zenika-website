@@ -1,19 +1,20 @@
 ---
+import ContactCta from '../../components/sections/ContactCta.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getLocalePaths, getPage, t } from '../../i18n/utils';
+import { getContact, getLocalePaths, t } from '../../i18n/utils';
 
 export const getStaticPaths = getLocalePaths;
 
 const { lang } = Astro.params;
-const { title, description } = await getPage(lang, 'contact');
 const tr = t(lang);
-const email = tr('contact.email');
+const { title, description, contact } = await getContact(lang);
 ---
 
 <BaseLayout title={title} description={description} locale={lang}>
-  <h1>{title}</h1>
-  <p>{description}</p>
-  <p>
-    {tr('contact.emailLabel')} <a href={`mailto:${email}`}>{email}</a>
-  </p>
+  <ContactCta
+    {...contact}
+    email={tr('contact.email')}
+    emailLabel={tr('contact.emailLabel')}
+    level={1}
+  />
 </BaseLayout>

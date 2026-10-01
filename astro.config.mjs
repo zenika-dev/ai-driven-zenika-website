@@ -7,8 +7,8 @@ export default defineConfig({
   site: 'https://www.zenika.com',
   trailingSlash: 'always',
   i18n: {
-    locales: ['en', 'fr'],
-    defaultLocale: 'en',
+    locales: ['fr', 'en'],
+    defaultLocale: 'fr',
     routing: {
       prefixDefaultLocale: true,
       redirectToDefaultLocale: false,

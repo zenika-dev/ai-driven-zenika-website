@@ -1,0 +1,105 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
+
+/** A link styled as a button. Variants follow the mockup's pills. */
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+  variant?: 'primary' | 'dark' | 'ghost';
+  size?: 'sm' | 'md';
+  block?: boolean;
+}
+
+const { variant = 'primary', size = 'md', block = false, class: className, ...attrs } = Astro.props;
+---
+
+<a class:list={['button', variant, size, { block }, className]} {...attrs}>
+  <span>
+    <slot />
+  </span>
+  {variant === 'dark' ? (
+    <span class="bubble">
+      <Icon name="arrow-right" />
+    </span>
+  ) : (
+    <Icon name="arrow-up-right" />
+  )}
+</a>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    min-height: var(--target-min);
+    border-radius: var(--radius-pill);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color var(--duration-fast) var(--easing-standard),
+      transform var(--duration-fast) var(--easing-standard);
+  }
+
+  .md {
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-5);
+    min-height: 3rem;
+  }
+
+  .sm {
+    padding: var(--space-2) var(--space-4);
+    min-height: 2.25rem;
+  }
+
+  .block {
+    display: flex;
+    width: 100%;
+  }
+
+  .primary {
+    background: var(--brand-red);
+    color: var(--color-on-brand);
+  }
+
+  .primary.md {
+    padding-inline-end: var(--space-5);
+  }
+
+  .primary:hover {
+    color: var(--color-on-brand);
+    transform: translateY(-1px);
+  }
+
+  .dark {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .dark:hover {
+    color: var(--color-bg);
+    transform: translateY(-1px);
+  }
+
+  .bubble {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .ghost {
+    padding-inline: var(--space-2);
+    color: var(--color-text);
+  }
+
+  .ghost:hover span {
+    text-decoration: underline;
+  }
+</style>

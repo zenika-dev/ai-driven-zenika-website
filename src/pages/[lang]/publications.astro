@@ -9,6 +9,10 @@ const { title, description } = await getPage(lang, 'publications');
 ---
 
 <BaseLayout title={title} description={description} locale={lang}>
-  <h1>{title}</h1>
-  <p>{description}</p>
+  <section class="section">
+    <div class="container">
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </div>
+  </section>
 </BaseLayout>

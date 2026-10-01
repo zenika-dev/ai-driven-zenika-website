@@ -1,0 +1,115 @@
+---
+import Eyebrow from '../ui/Eyebrow.astro';
+import Highlight from '../ui/Highlight.astro';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  highlight: string;
+  lead: string;
+  body: string;
+  stats: { value: string; label: string }[];
+}
+
+const { eyebrow, heading, highlight, lead, body, stats } = Astro.props;
+const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
+---
+
+<section id="about" class="section section--alt" aria-labelledby="about-title">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <Eyebrow text={eyebrow} />
+        <h2 id="about-title">
+          <Highlight text={heading} highlight={highlight} />
+        </h2>
+      </div>
+      <div>
+        <p class="lead">{lead}</p>
+        <p class="body">{body}</p>
+      </div>
+    </div>
+    <dl class="stats">
+      {stats.map(({ value, label }, i) => (
+        <div class="stat">
+          <dt>{label}</dt>
+          <dd class={tones[i % tones.length]}>{value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: var(--space-5) var(--space-8);
+  }
+
+  h2 {
+    max-width: 18ch;
+  }
+
+  .lead {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .body {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-5);
+    margin: var(--space-8) 0 0;
+  }
+
+  /* Value above its label visually; <dt> stays first so the pair reads "label: value". */
+  .stat {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-2);
+  }
+
+  dt {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  dd {
+    margin: 0;
+    font-size: var(--font-size-stat);
+    font-weight: var(--font-weight-black);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1;
+  }
+
+  .brand {
+    color: var(--color-brand-text);
+  }
+
+  .teal {
+    color: var(--color-teal-text);
+  }
+
+  .indigo {
+    color: var(--color-indigo-text);
+  }
+
+  .ink {
+    color: var(--color-text);
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .stats {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

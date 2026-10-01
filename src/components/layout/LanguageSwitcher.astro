@@ -21,7 +21,8 @@ const options = getLocales().map((code) => ({
     {options.map(({ code, href, label, current }) => (
       <li>
         <a href={href} lang={code} hreflang={code} aria-current={current ? 'true' : undefined}>
-          {label}
+          {code.toUpperCase()}
+          <span class="visually-hidden">{label}</span>
         </a>
       </li>
     ))}
@@ -31,22 +32,30 @@ const options = getLocales().map((code) => ({
 <style>
   ul {
     display: flex;
-    gap: var(--space-3);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--target-min);
-    font-size: var(--font-size-sm);
+    display: inline-grid;
+    place-items: center;
+    min-width: 2rem;
+    min-height: 2rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-wide);
     text-decoration: none;
   }
 
-  a:hover,
+  a:hover {
+    color: var(--color-text);
+  }
+
   a[aria-current='true'] {
+    color: var(--color-text);
     text-decoration: underline;
+    text-underline-offset: 0.3em;
   }
 </style>
