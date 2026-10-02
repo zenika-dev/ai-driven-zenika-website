@@ -3,8 +3,8 @@
  * Light values on :root, dark values on [data-theme="dark"] (set by the inline
  * theme script) and under prefers-color-scheme for visitors without JavaScript.
  *
- * Values are SAMPLED FROM MOCKUP PNG (02-static-prototyping/presentation-page/
- * reference-mockup.png) — confirm against Figma. Where the mockup fails WCAG AA,
+ * Values are SAMPLED FROM the Figma mockup exports (Figma file KMB87FX50hnHWQiXugGlGN,
+ * node 3410-6657) — confirm against Figma. Where the mockup fails WCAG AA,
  * the nearest passing value is used and the mockup value is noted.
  */
 
@@ -61,7 +61,7 @@
   --space-7: 3rem;
   --space-8: 4rem;
   --space-9: 6rem;
-  /* Desktop rhythm measured from desktop-1440@2x.png (1440px frame). */
+  /* Desktop rhythm measured from the 1440px Figma frame. */
   --section-padding: clamp(var(--space-8), 7vw, 6.25rem);
   --hero-padding: clamp(var(--space-7), 5.5vw, 5rem);
   --heading-gap: clamp(var(--space-7), 4.5vw, 3.75rem);

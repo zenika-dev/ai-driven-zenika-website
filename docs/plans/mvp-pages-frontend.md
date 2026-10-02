@@ -3,7 +3,7 @@
 ## Sources
 
 - **PRDs:** `01b-product-requirements/presentation-page-prd.md`, `01b-product-requirements/contact-page-prd.md`.
-- **Design:** `02-static-prototyping/presentation-page/reference-mockup.png` (high-fidelity desktop, tablet and mobile frames, exported from Figma `KMB87FX50hnHWQiXugGlGN`, node `3410-6657`). The Figma file itself cannot be read (no Dev Mode or MCP access), so **every token value below is sampled from the PNG** and must be confirmed against Figma.
+- **Design:** Figma mockup exports shared in chat, not kept in the repo (high-fidelity desktop, tablet and mobile frames, exported from Figma `KMB87FX50hnHWQiXugGlGN`, node `3410-6657`). The Figma file itself cannot be read (no Dev Mode or MCP access), so **every token value below is sampled from the PNG** and must be confirmed against Figma.
 - **Demo:** none.
 - **Conflicts, resolved in the PRDs:**
   - The mockup's contact form becomes a mailto button.
