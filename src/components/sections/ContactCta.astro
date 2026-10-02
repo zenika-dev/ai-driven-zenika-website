@@ -2,7 +2,10 @@
 import Button from '../ui/Button.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 
-/** "Parlons-nous" block. h1 on the Contact page, h2 at the end of the Presentation page. */
+/**
+ * "Parlons-nous" block. h1 on the Contact page, h2 at the end of the Presentation page.
+ * `tone="inverse"` is the mockup's always-dark band; `tone="default"` follows the theme.
+ */
 interface Props {
   eyebrow: string;
   heading: string;
@@ -11,15 +14,25 @@ interface Props {
   email: string;
   emailLabel: string;
   level?: 1 | 2;
+  tone?: 'inverse' | 'default';
 }
 
-const { eyebrow, heading, intro, ctaLabel, email, emailLabel, level = 2 } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  intro,
+  ctaLabel,
+  email,
+  emailLabel,
+  level = 2,
+  tone = 'inverse',
+} = Astro.props;
 const Heading = level === 1 ? 'h1' : 'h2';
 ---
 
 <section
   id="contact"
-  class:list={['section', 'section--inverse', 'contact', { page: level === 1 }]}
+  class:list={['section', 'contact', { 'section--inverse': tone === 'inverse', page: level === 1 }]}
   aria-labelledby="contact-title"
 >
   <div class="container grid">
@@ -65,7 +78,7 @@ const Heading = level === 1 ? 'h1' : 'h2';
 
   .intro {
     margin: 0;
-    color: var(--color-inverse-muted);
+    color: var(--color-text-muted);
   }
 
   .action {
@@ -76,7 +89,7 @@ const Heading = level === 1 ? 'h1' : 'h2';
 
   .email {
     margin: 0;
-    color: var(--color-inverse-muted);
+    color: var(--color-text-muted);
     font-size: var(--font-size-sm);
   }
 
