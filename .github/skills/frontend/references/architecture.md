@@ -89,7 +89,7 @@ The root-level folders `01b-product-requirements/`, `02-static-prototyping/` and
 ## Performance and SEO
 
 - Images use `<Image />` from `astro:assets` with explicit dimensions, so there is no layout shift.
-- Fonts are self-hosted, at most two families, with `font-display: swap`. No font CDNs.
+- Fonts are configured with the Astro Fonts API (`fonts` in `astro.config.mjs`, `<Font />` in `BaseLayout`): fetched at build time and served from this site, at most two families, with `font-display: swap`. No font CDNs at runtime, and no font files committed.
 - Every page has a unique title, meta description, canonical URL, `hreflang` links, and Open Graph tags, all set through `BaseLayout` props.
 - Target Lighthouse (mobile) of 95 or higher for performance, accessibility, best practices, and SEO on every page. **[DECISION]**
 

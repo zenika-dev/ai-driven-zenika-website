@@ -109,7 +109,7 @@ All values were **sampled from the PNG**. Each group is commented `SAMPLED FROM 
 
 The semantic tokens from the skeleton (`--color-bg`, `--color-text`, …) are kept and mapped onto these. **Dark theme:** uses the mockup's own dark-section palette (`--color-bg: #0b0b0f`, `--color-surface: #16161d`, text white, muted sampled from the dark-section body text). Cream sections become `--color-ink-raised`.
 
-**Fonts:** system stack until confirmed (OQ2). Once named, the font is self-hosted from `src/assets/fonts/` with `font-display: swap`, at most two families.
+**Fonts:** Montserrat (headings, labels, buttons) and Nunito (body), configured with the Astro Fonts API in `astro.config.mjs`: downloaded from Google Fonts at build time and served from this site, with `font-display: swap` and generated fallback metrics.
 
 ## JavaScript
 

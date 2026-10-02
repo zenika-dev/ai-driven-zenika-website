@@ -51,7 +51,7 @@ for (const locale of locales) {
       expect(await page.locator('#clients .points li').count()).toBeGreaterThan(0);
     });
 
-    test('uses the self-hosted brand fonts', async ({ page }) => {
+    test('uses the brand fonts, served from this site', async ({ page }) => {
       await page.evaluate(() => document.fonts.ready);
       const families = await page.evaluate(() => [
         getComputedStyle(document.querySelector('h1') as Element).fontFamily,
@@ -59,8 +59,21 @@ for (const locale of locales) {
       ]);
       expect(families[0]).toContain('Montserrat');
       expect(families[1]).toContain('Nunito');
-      expect(await page.evaluate(() => document.fonts.check('800 16px Montserrat'))).toBe(true);
-      expect(await page.evaluate(() => document.fonts.check('400 16px Nunito'))).toBe(true);
+      // The Astro Fonts API hashes family names (e.g. "Montserrat-d611…"), so match by prefix.
+      const loaded = await page.evaluate(() =>
+        [...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family),
+      );
+      expect(loaded.some((family) => family.startsWith('Montserrat'))).toBe(true);
+      expect(loaded.some((family) => family.startsWith('Nunito'))).toBe(true);
+      // Served from this site, never from a font CDN.
+      const fontHosts = await page.evaluate(() =>
+        performance
+          .getEntriesByType('resource')
+          .filter((entry) => entry.name.endsWith('.woff2'))
+          .map((entry) => new URL(entry.name).origin),
+      );
+      expect(fontHosts.length).toBeGreaterThan(0);
+      expect(new Set(fontHosts)).toEqual(new Set([new URL(page.url()).origin]));
     });
 
     test('ends with the mailto contact block', async ({ page }) => {
