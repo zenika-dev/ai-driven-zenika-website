@@ -6,27 +6,35 @@ interface Props {
   eyebrow: string;
   heading: string;
   highlight: string;
-  lead: string;
-  body: string;
+  paragraphs: string[];
+  list: string[];
+  closing: string;
   stats: { value: string; label: string }[];
 }
 
-const { eyebrow, heading, highlight, lead, body, stats } = Astro.props;
+const { eyebrow, heading, highlight, paragraphs, list, closing, stats } = Astro.props;
 const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
 ---
 
-<section id="about" class="section section--alt" aria-labelledby="about-title">
+<section id="values" class="section section--alt" aria-labelledby="values-title">
   <div class="container">
     <div class="grid">
       <div>
         <Eyebrow text={eyebrow} />
-        <h2 id="about-title">
+        <h2 id="values-title">
           <Highlight text={heading} highlight={highlight} />
         </h2>
       </div>
-      <div>
-        <p class="lead">{lead}</p>
-        <p class="body">{body}</p>
+      <div class="body">
+        {paragraphs.map((text) => (
+          <p>{text}</p>
+        ))}
+        <ul>
+          {list.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+        <p class="closing">{closing}</p>
       </div>
     </div>
     <dl class="stats">
@@ -43,44 +51,59 @@ const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
 <style>
   .grid {
     display: grid;
-    gap: var(--space-5) var(--space-8);
+    gap: var(--space-5) var(--space-7);
   }
 
   h2 {
-    max-width: 18ch;
-  }
-
-  .lead {
-    font-weight: var(--font-weight-semibold);
+    max-width: 14em;
   }
 
   .body {
     color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .body p {
+    margin: 0;
+  }
+
+  .body ul {
+    margin: 0;
+    padding-inline-start: var(--space-5);
+  }
+
+  .body .closing {
+    margin-block-start: var(--space-5);
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-base);
   }
 
   .stats {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6) var(--space-5);
-    margin: var(--space-8) 0 0;
+    gap: var(--space-6);
+    margin: var(--stats-gap) 0 0;
   }
 
   /* Value above its label visually; <dt> stays first so the pair reads "label: value". */
   .stat {
     display: flex;
     flex-direction: column-reverse;
-    gap: var(--space-2);
+    gap: var(--space-3);
   }
 
   dt {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
   }
 
   dd {
     margin: 0;
+    font-family: var(--font-family-display);
     font-size: var(--font-size-stat);
     font-weight: var(--font-weight-black);
     letter-spacing: var(--tracking-tight);
@@ -103,7 +126,7 @@ const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
     color: var(--color-text);
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 640px) {
     .grid {
       grid-template-columns: 1fr 1fr;
     }

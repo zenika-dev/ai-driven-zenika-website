@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { t } from '../../i18n/utils';
+import Logo from '../ui/Logo.astro';
 
 interface Props {
   locale: string;
@@ -14,7 +15,7 @@ const copyright = tr('footer.copyright').replace('{year}', String(new Date().get
 <footer class="site-footer section--inverse">
   <div class="container">
     <a class="brand" href={getRelativeLocaleUrl(locale)}>
-      {tr('site.name')}
+      <Logo alt={tr('site.name')} tone="light" />
     </a>
     <p class="tagline">{tr('footer.tagline')}</p>
     <p class="copyright">{copyright}</p>
@@ -22,29 +23,26 @@ const copyright = tr('footer.copyright').replace('{year}', String(new Date().get
 </footer>
 
 <style>
+  /* Measured from the 1440px frame: ~43px above the logo, ~40px below the copyright. */
   .site-footer {
-    padding-block: var(--space-8) var(--space-6);
+    padding-block: 2.75rem 2.5rem;
     border-block-start: var(--border-width) solid var(--color-inverse-border);
   }
 
   .brand {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-black);
-    letter-spacing: var(--tracking-tight);
-    text-decoration: none;
-    text-transform: lowercase;
+    display: inline-block;
   }
 
   .tagline {
     max-width: 22rem;
-    margin: var(--space-3) 0 var(--space-7);
+    margin: var(--space-2) 0 var(--space-6);
     color: var(--color-inverse-muted);
     font-size: var(--font-size-sm);
   }
 
   .copyright {
     margin: 0;
-    padding-block-start: var(--space-5);
+    padding-block-start: var(--space-4);
     border-block-start: var(--border-width) solid var(--color-inverse-border);
     color: var(--color-inverse-muted);
     font-size: var(--font-size-xs);

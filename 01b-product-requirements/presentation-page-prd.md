@@ -6,7 +6,7 @@ Prospective clients and training buyers want to know what Zenika offers and who 
 
 ## KEY MESSAGES
 - Zenika is a technology partner close to its clients ("partenaire technologique de proximité").
-- 20+ years of experience: 600+ people, 12 agencies, 3 continents.
+- 20+ years of experience: 600+ people, 14 agencies, 3 continents.
 - From decision to delivery: Conseil & CxO Advisory, Engineering & Delivery, Formation & Adoption.
 - Zenika turns information-system complexity into measurable business value.
 - Leading organisations already work with Zenika.
@@ -19,17 +19,17 @@ Prospective clients and training buyers want to know what Zenika offers and who 
 - As any visitor, I want a clear way to contact Zenika so that I can start a conversation.
 
 ## PAGE CONTENT
-- Hero: label, heading, intro, two CTAs, team photo — Zenika marketing (copy), Figma (photo) — draft in mockup.
-- 01 Qui sommes-nous: intro and four figures (600+, 12, 3, 1) — Zenika marketing — draft in mockup.
-- 02 Ce que nous faisons: three offer cards — Zenika marketing — draft in mockup.
-- 03 Notre manière d'agir: dark section, cards Optimiser, Innover, Transformer — Zenika marketing — draft in mockup.
-- 04 Nos clients: seven client logos — Figma, permission confirmed by Zenika — draft in mockup.
-- 05 Publications & infos: three publication cards — Zenika marketing — draft in mockup.
-- 06 Parlons-nous: heading, intro, mailto button — Zenika marketing — draft in mockup.
+- Hero: label, context, heading, two CTAs, photo — Zenika marketing (copy), Figma (photo) — draft in Figma.
+- 01 Nos expertises: two-part heading, "Complexité des SI" and "Valeur mesurable" lists, Optimiser / Innover / Transformer cards — Zenika marketing — draft in Figma.
+- 02 Notre approche: heading and five numbered commitments — Zenika marketing — draft in Figma.
+- 03 Nos valeurs: history, values, four figures — Zenika marketing — draft in Figma.
+- 04 Nos clients: four points and seven client names — Zenika marketing — draft in Figma.
+- 05 Nos dernières publications: three publication cards — Zenika marketing — draft in Figma.
+- 06 Parlons-nous: heading, intro, mailto button — Zenika marketing — draft in Figma.
 
 ## CALLS TO ACTION
 - Primary: "Parlons de vos projets" (hero) and "Nous contacter" (header) lead to the Contact page.
-- Secondary: "Découvrir Zenika" leads to the 01 Qui sommes-nous section; the 06 button opens mailto:info@zenika.com.
+- Secondary: "Découvrir Zenika" leads to the 01 Nos expertises section; the 06 button opens mailto:info@zenika.com.
 
 ## LOCALIZATION
 French is the default and is written first; English translations follow, written and approved by Zenika marketing. Singapore localisation is undecided.

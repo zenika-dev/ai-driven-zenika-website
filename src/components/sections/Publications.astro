@@ -12,7 +12,7 @@ const { eyebrow, heading, intro, items } = Astro.props;
 const gradients = ['orange', 'purple', 'blue'] as const;
 ---
 
-<section id="publications" class="section" aria-labelledby="publications-title">
+<section id="publications" class="section section--alt" aria-labelledby="publications-title">
   <div class="container">
     <SectionHeading id="publications-title" eyebrow={eyebrow} heading={heading} intro={intro} />
     <!-- Not links in the MVP: the Publications page is hidden. -->
@@ -37,9 +37,25 @@ const gradients = ['orange', 'purple', 'blue'] as const;
   }
 
   .card {
-    min-height: 10rem;
+    position: relative;
+    min-height: 20rem;
     padding: var(--space-6);
+    overflow: hidden;
     border-radius: var(--radius-lg);
+  }
+
+  /* Decorative "Z" watermark (pseudo-element, so it is not read or contrast-checked). */
+  .card::after {
+    content: 'Z';
+    position: absolute;
+    inset-inline-end: -0.05em;
+    inset-block-end: -0.2em;
+    color: var(--color-watermark);
+    font-family: var(--font-family-display);
+    font-size: 11rem;
+    font-weight: var(--font-weight-black);
+    line-height: 1;
+    pointer-events: none;
   }
 
   /* Text colours are fixed per gradient (not themed) so contrast holds in both themes. */
@@ -59,7 +75,8 @@ const gradients = ['orange', 'purple', 'blue'] as const;
   }
 
   .kind {
-    margin: 0 0 var(--space-3);
+    margin: 0 0 var(--space-7);
+    font-family: var(--font-family-display);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--tracking-wide);
@@ -69,19 +86,26 @@ const gradients = ['orange', 'purple', 'blue'] as const;
   h3 {
     margin: 0;
     max-width: 22ch;
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-card-title);
     font-weight: var(--font-weight-black);
     letter-spacing: var(--tracking-tight);
+  }
+
+  /* Tablet: two cards side by side, the third full width (834px frame). */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
   }
 
   @media (min-width: 1024px) {
     .cards {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--space-5);
-    }
-
-    .card {
-      min-height: 19rem;
     }
   }
 </style>

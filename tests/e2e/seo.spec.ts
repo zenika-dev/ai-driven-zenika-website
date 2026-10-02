@@ -47,3 +47,12 @@ test('titles are unique within each locale', async ({ page }) => {
     expect(titles.size).toBe(routes.filter((r) => r.locale === locale).length);
   }
 });
+
+test('favicon is linked and served', async ({ page, request }) => {
+  await page.goto(pageUrl(defaultLocale, 'index'));
+  const href = await page.locator('head link[rel="icon"]').getAttribute('href');
+  expect(href).toBeTruthy();
+  const response = await request.get(href ?? '');
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('image/png');
+});

@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { defaultLocale, pageUrl } from '../helpers/routes';
+import { defaultLocale, pageUrl, routes } from '../helpers/routes';
 
 const home = pageUrl(defaultLocale, 'index');
 const contact = pageUrl(defaultLocale, 'contact');
@@ -33,6 +33,35 @@ test('toggle switches theme and the choice persists', async ({ page }) => {
   await toggle(page).click();
   await expect(html(page)).toHaveAttribute('data-theme', 'light');
 });
+
+/** Relative luminance (0–1) of the first non-transparent background at or above `el`. */
+function visibleBackgroundLuminance(el: Element): number {
+  for (let node: Element | null = el; node; node = node.parentElement) {
+    const match = getComputedStyle(node).backgroundColor.match(/[\d.]+/g);
+    if (!match) continue;
+    const [r = 0, g = 0, b = 0, alpha = 1] = match.map(Number);
+    if (alpha === 0) continue;
+    const linear = [r, g, b].map((v) => {
+      const c = v / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * (linear[0] ?? 0) + 0.7152 * (linear[1] ?? 0) + 0.0722 * (linear[2] ?? 0);
+  }
+  return 1;
+}
+
+for (const { url } of routes) {
+  test(`${url}: page content follows the theme, not just the header`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.goto(url);
+    const firstSection = page.locator('main > section').first();
+
+    expect(await firstSection.evaluate(visibleBackgroundLuminance)).toBeGreaterThan(0.5);
+    await toggle(page).click();
+    await expect(html(page)).toHaveAttribute('data-theme', 'dark');
+    expect(await firstSection.evaluate(visibleBackgroundLuminance)).toBeLessThan(0.5);
+  });
+}
 
 test('theme is applied before the body is parsed (no flash)', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'dark' });
