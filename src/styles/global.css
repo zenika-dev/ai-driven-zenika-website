@@ -45,6 +45,7 @@ h3 {
 
 h1 {
   font-size: var(--font-size-3xl);
+  line-height: var(--line-height-display);
 }
 
 h2 {

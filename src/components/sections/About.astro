@@ -43,7 +43,7 @@ const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
 <style>
   .grid {
     display: grid;
-    gap: var(--space-5) var(--space-8);
+    gap: var(--space-5) var(--space-7);
   }
 
   h2 {
@@ -51,19 +51,23 @@ const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
   }
 
   .lead {
+    margin-block-end: var(--space-5);
+    font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
   }
 
   .body {
+    margin: 0;
     color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-relaxed);
   }
 
   .stats {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6) var(--space-5);
-    margin: var(--space-8) 0 0;
+    gap: var(--space-6);
+    margin: var(--stats-gap) 0 0;
   }
 
   /* Value above its label visually; <dt> stays first so the pair reads "label: value". */

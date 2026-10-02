@@ -55,7 +55,7 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
     align-items: center;
     gap: var(--space-2) var(--space-3);
     min-height: var(--header-height);
-    padding-block: var(--space-3);
+    padding-block: var(--space-2);
   }
 
   .brand {
@@ -90,6 +90,18 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
 
     .cta-short {
       display: none;
+    }
+  }
+
+  /* Desktop: logo left, nav centred, tools right, as in the Figma frame. */
+  @media (min-width: 1024px) {
+    .inner {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+    }
+
+    .tools {
+      justify-self: end;
     }
   }
 </style>

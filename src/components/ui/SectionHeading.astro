@@ -30,26 +30,28 @@ const Heading = level === 1 ? 'h1' : 'h2';
 <style>
   .section-heading {
     display: grid;
-    gap: var(--space-2) var(--space-8);
-    margin-block-end: var(--space-7);
+    gap: var(--space-4) var(--space-8);
+    margin-block-end: var(--heading-gap);
   }
 
   .title :global(h1),
   .title :global(h2) {
     margin: 0;
-    max-width: 22ch;
+    max-width: 14em;
   }
 
   .intro {
     margin: 0;
-    max-width: 34rem;
+    max-width: 26.5rem;
     color: var(--color-text-muted);
     font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
   }
 
+  /* Intro column starts at 880px in the 1440px frame: a fixed 30rem column. */
   @media (min-width: 1024px) {
     .section-heading {
-      grid-template-columns: 1fr minmax(0, 26rem);
+      grid-template-columns: minmax(0, 1fr) 30rem;
       align-items: end;
     }
   }

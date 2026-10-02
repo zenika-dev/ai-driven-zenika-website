@@ -23,8 +23,9 @@ const copyright = tr('footer.copyright').replace('{year}', String(new Date().get
 </footer>
 
 <style>
+  /* Measured from the 1440px frame: ~43px above the logo, ~40px below the copyright. */
   .site-footer {
-    padding-block: var(--space-8) var(--space-6);
+    padding-block: 2.75rem 2.5rem;
     border-block-start: var(--border-width) solid var(--color-inverse-border);
   }
 
@@ -34,14 +35,14 @@ const copyright = tr('footer.copyright').replace('{year}', String(new Date().get
 
   .tagline {
     max-width: 22rem;
-    margin: var(--space-3) 0 var(--space-7);
+    margin: var(--space-2) 0 var(--space-6);
     color: var(--color-inverse-muted);
     font-size: var(--font-size-sm);
   }
 
   .copyright {
     margin: 0;
-    padding-block-start: var(--space-5);
+    padding-block-start: var(--space-4);
     border-block-start: var(--border-width) solid var(--color-inverse-border);
     color: var(--color-inverse-muted);
     font-size: var(--font-size-xs);

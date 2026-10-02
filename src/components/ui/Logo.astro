@@ -33,6 +33,12 @@ const { alt, tone = 'auto' } = Astro.props;
 
   @media (min-width: 640px) {
     .logo {
+      height: var(--logo-height-md);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .logo {
       height: var(--logo-height-lg);
     }
   }

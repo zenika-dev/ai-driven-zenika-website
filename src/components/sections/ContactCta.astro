@@ -52,10 +52,15 @@ const Heading = level === 1 ? 'h1' : 'h2';
     align-items: center;
   }
 
+  .contact {
+    padding-block-end: var(--hero-padding);
+  }
+
   .contact :global(h1),
   .contact :global(h2) {
-    max-width: 16ch;
-    font-size: var(--font-size-2xl);
+    max-width: 12em;
+    font-size: var(--font-size-2xl-lg);
+    line-height: var(--line-height-snug);
   }
 
   .intro {
@@ -78,6 +83,7 @@ const Heading = level === 1 ? 'h1' : 'h2';
   @media (min-width: 1024px) {
     .grid {
       grid-template-columns: 1fr 1fr;
+      gap: var(--space-7);
     }
 
     .action {
