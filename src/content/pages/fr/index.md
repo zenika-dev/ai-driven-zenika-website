@@ -10,8 +10,8 @@ presentation:
     highlight: Système d'Information.
     primaryCta: Parlons de vos projets
     secondaryCta: Découvrir Zenika
-    image: ../../../assets/images/hero-team.png
-    imageAlt: Une équipe Zenika en atelier autour d'un écran et d'un tableau de post-it.
+    image: ../../../assets/images/hero-meeting.png
+    imageAlt: Une équipe Zenika en réunion autour d'une table en verre, dans un bureau lumineux.
   expertises:
     eyebrow: 01 / Nos expertises
     heading: Maîtriser la complexité des systèmes d'information et des organisations…

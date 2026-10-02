@@ -10,8 +10,8 @@ presentation:
     highlight: information system.
     primaryCta: Let's talk about your projects
     secondaryCta: Discover Zenika
-    image: ../../../assets/images/hero-team.png
-    imageAlt: A Zenika team in a workshop around a screen and a board of sticky notes.
+    image: ../../../assets/images/hero-meeting.png
+    imageAlt: A Zenika team meeting around a glass table in a bright office.
   expertises:
     eyebrow: 01 / Our expertise
     heading: Mastering the complexity of information systems and organisations…
