@@ -85,12 +85,24 @@ test('logo has an accessible name and follows the theme', async ({ page }) => {
   await expect(page.locator('footer .brand img:visible')).toHaveCount(1);
 });
 
+// Runs at the 1280px and 375px projects. (At tablet widths, 640–1023px, the nav
+// intentionally sits on its own second row, as in the 834px Figma frame.)
 test('header fits on one row', async ({ page }) => {
   await page.goto(pageUrl(firstLocale, 'index'));
-  const brand = await page.locator('header .brand').boundingBox();
-  const cta = await page.locator(`header a[href="${pageUrl(firstLocale, ctaPage)}"]`).boundingBox();
-  expect(brand && cta).toBeTruthy();
-  if (!brand || !cta) return;
-  const centre = (box: { y: number; height: number }) => box.y + box.height / 2;
-  expect(Math.abs(centre(brand) - centre(cta))).toBeLessThan(8);
+  const controls = page.locator(
+    'header .brand, header nav a:visible, header [data-theme-toggle]:visible, header a.button',
+  );
+  const boxes = (await controls.evaluateAll((elements) =>
+    elements.map((el) => {
+      const { top, height } = el.getBoundingClientRect();
+      return { label: el.textContent?.trim() || el.className, centre: top + height / 2 };
+    }),
+  )) as { label: string; centre: number }[];
+
+  // Logo, nav link(s), FR, EN, theme toggle and CTA on desktop; nav hidden on mobile.
+  expect(boxes.length).toBeGreaterThanOrEqual(5);
+  const [first] = boxes;
+  for (const box of boxes) {
+    expect(Math.abs(box.centre - (first?.centre ?? 0)), box.label).toBeLessThan(8);
+  }
 });

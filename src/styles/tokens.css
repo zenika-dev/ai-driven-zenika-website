@@ -51,6 +51,8 @@
   --color-inverse-brand: var(--brand-red-bright);
   --color-inverse-border: #2a2a2d;
   --color-on-brand: #ffffff;
+  /* Decorative watermark on coloured cards (publication "Z"). */
+  --color-watermark: color-mix(in srgb, var(--color-on-brand) 15%, transparent);
   color-scheme: light;
 
   /* Spacing — measured from mockup PNG — confirm against Figma */
