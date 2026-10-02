@@ -1,0 +1,203 @@
+---
+import Eyebrow from '../ui/Eyebrow.astro';
+import Highlight from '../ui/Highlight.astro';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  highlight: string;
+  conclusion: string;
+  conclusionHighlight: string;
+  problems: { label: string; items: string[] };
+  outcomes: { label: string; items: string[] };
+  levers: { title: string; text: string }[];
+}
+
+const { eyebrow, heading, highlight, conclusion, conclusionHighlight, problems, outcomes, levers } =
+  Astro.props;
+const tones = ['brand', 'indigo', 'teal'] as const;
+/** Bullet colour by position: the list runs red → indigo → teal in thirds, as in the design. */
+const toneAt = (i: number, n: number) => tones[Math.min(tones.length - 1, Math.floor((i * 3) / n))];
+---
+
+<section id="expertises" class="section section--inverse" aria-labelledby="expertises-title">
+  <div class="container">
+    <Eyebrow text={eyebrow} />
+    <!-- One sentence in two parts: problem on the left, outcome on the right. -->
+    <h2 id="expertises-title" class="headline">
+      <span>
+        <Highlight text={heading} highlight={highlight} />
+      </span>
+      <span>
+        <Highlight text={conclusion} highlight={conclusionHighlight} />
+      </span>
+    </h2>
+
+    <div class="board">
+      <div class="list problems">
+        <p class="list-label">{problems.label}</p>
+        <ul>
+          {problems.items.map((item, i) => (
+            <li class={toneAt(i, problems.items.length)}>{item}</li>
+          ))}
+        </ul>
+      </div>
+
+      <ul class="levers">
+        {levers.map(({ title, text }, i) => (
+          <li class:list={['lever', tones[i % tones.length]]}>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="list outcomes">
+        <p class="list-label">{outcomes.label}</p>
+        <ul>
+          {outcomes.items.map((item, i) => (
+            <li class={toneAt(i, outcomes.items.length)}>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .headline {
+    display: grid;
+    gap: var(--space-4) var(--space-8);
+    margin-block-end: var(--heading-gap);
+    font-size: var(--font-size-2xl-sm);
+    line-height: var(--line-height-tight);
+  }
+
+  .headline span {
+    max-width: 16em;
+  }
+
+  .board {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .list-label {
+    margin: 0 0 var(--space-4);
+    color: var(--color-brand-text);
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .outcomes .list-label {
+    color: var(--color-inverse-teal);
+  }
+
+  .list ul {
+    display: grid;
+    gap: var(--space-3) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .list li {
+    position: relative;
+    padding-inline-start: var(--space-4);
+    color: var(--color-inverse-text-soft);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-snug);
+  }
+
+  /* Decorative coloured bullet. */
+  .list li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.5em;
+    width: 0.3125rem;
+    height: 0.3125rem;
+    border-radius: var(--radius-pill);
+    background: var(--brand-red-bright);
+  }
+
+  .list li.indigo::before {
+    background: var(--brand-indigo);
+  }
+
+  .list li.teal::before {
+    background: var(--brand-teal);
+  }
+
+  .levers {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lever {
+    --glow: var(--brand-red);
+    display: grid;
+    align-content: center;
+    gap: var(--space-1);
+    min-height: 7rem;
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(
+        30% 80% at 100% 100%,
+        color-mix(in srgb, var(--glow) 55%, transparent),
+        transparent 70%
+      ),
+      var(--color-surface);
+  }
+
+  .lever.indigo {
+    --glow: var(--brand-indigo);
+  }
+
+  .lever.teal {
+    --glow: var(--brand-teal);
+  }
+
+  .lever h3 {
+    margin: 0;
+    font-size: var(--font-size-card-title);
+    font-weight: var(--font-weight-black);
+    text-transform: uppercase;
+  }
+
+  .lever p {
+    margin: 0;
+    color: var(--color-inverse-text-soft);
+    font-size: var(--font-size-md);
+  }
+
+  @media (min-width: 640px) {
+    .list ul {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* Laptop: 220px list | cards | 220px list, 32px apart; the conclusion starts at x=860. */
+  @media (min-width: 1024px) {
+    .headline {
+      grid-template-columns: minmax(0, 1fr) 31.25rem;
+    }
+
+    .board {
+      grid-template-columns: 13.75rem minmax(0, 1fr) 13.75rem;
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    .list ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

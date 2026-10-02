@@ -50,7 +50,7 @@ const { label } = Astro.props;
     width: var(--icon-button-size);
     height: var(--icon-button-size);
     padding: 0;
-    background: transparent;
+    background: var(--color-surface-2);
     color: var(--color-text);
     border: 0;
     border-radius: var(--radius-pill);
@@ -59,7 +59,7 @@ const { label } = Astro.props;
   }
 
   .theme-toggle:hover {
-    background: var(--color-surface);
+    background: var(--color-border);
   }
 
   .theme-toggle :global(.sun),

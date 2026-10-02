@@ -44,7 +44,6 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
     inset-block-start: 0;
     z-index: 10;
     background: var(--color-bg);
-    border-block-end: var(--border-width) solid var(--color-border);
     /* Shared between pages, so it stays in place during page transitions. */
     view-transition-name: site-header;
   }
@@ -73,6 +72,14 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
 
   .cta-long {
     display: none;
+  }
+
+  /* Tablet: logo and tools on the first row, nav on its own row below (as in the 834px frame). */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .inner :global(.main-nav) {
+      order: 1;
+      flex-basis: 100%;
+    }
   }
 
   @media (min-width: 640px) {

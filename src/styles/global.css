@@ -1,5 +1,22 @@
 /* Global base styles. Tokens only; component styles live in scoped <style> blocks. */
 
+/* Self-hosted variable fonts (Latin subset, OFL licences in /fonts). */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url('/fonts/montserrat-latin-var.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/nunito-latin-var.woff2') format('woff2');
+}
+
 *,
 *::before,
 *::after {
@@ -37,6 +54,7 @@ h1,
 h2,
 h3 {
   margin-block: 0 var(--space-4);
+  font-family: var(--font-family-display);
   font-weight: var(--font-weight-black);
   letter-spacing: var(--tracking-tight);
   line-height: var(--line-height-tight);
@@ -91,7 +109,7 @@ a:hover {
 
 /* Full-width page bands. Each section holds its own .container. */
 .section {
-  padding-block: var(--section-padding);
+  padding-block: var(--section-padding-top) var(--section-padding-bottom);
   scroll-margin-top: var(--header-height);
 }
 

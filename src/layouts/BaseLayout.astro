@@ -34,6 +34,20 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link
+      rel="preload"
+      href="/fonts/montserrat-latin-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/nunito-latin-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

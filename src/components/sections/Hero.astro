@@ -6,26 +6,26 @@ import Highlight from '../ui/Highlight.astro';
 
 interface Props {
   label: string;
+  intro: string;
   heading: string;
   highlight: string;
-  intro: string;
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
   image: ImageMetadata;
   imageAlt: string;
 }
 
-const { label, heading, highlight, intro, primaryCta, secondaryCta, image, imageAlt } = Astro.props;
+const { label, intro, heading, highlight, primaryCta, secondaryCta, image, imageAlt } = Astro.props;
 ---
 
 <section class="section hero" aria-labelledby="hero-title">
   <div class="container grid">
     <div class="copy">
       <p class="label">{label}</p>
+      <p class="intro">{intro}</p>
       <h1 id="hero-title">
         <Highlight text={heading} highlight={highlight} />
       </h1>
-      <p class="intro">{intro}</p>
       <div class="actions">
         <Button href={primaryCta.href} variant="dark" class="primary-cta">
           {primaryCta.label}
@@ -54,28 +54,30 @@ const { label, heading, highlight, intro, primaryCta, secondaryCta, image, image
 
   .grid {
     display: grid;
-    gap: var(--space-7);
+    gap: var(--space-6);
     align-items: center;
   }
 
   .label {
     margin: 0 0 var(--space-5);
     color: var(--color-brand-text);
+    font-family: var(--font-family-display);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
   }
 
-  h1 {
-    max-width: 14ch;
-    margin-block-end: var(--space-5);
-  }
-
   .intro {
-    max-width: 32rem;
+    max-width: 31.25rem;
     margin-block-end: var(--space-6);
     color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-base);
+  }
+
+  h1 {
+    margin-block-end: var(--space-6);
   }
 
   .actions {
@@ -93,7 +95,7 @@ const { label, heading, highlight, intro, primaryCta, secondaryCta, image, image
     border-radius: var(--radius-lg);
   }
 
-  @media (max-width: 1023px) {
+  @media (max-width: 639px) {
     .actions {
       flex-direction: column;
       align-items: stretch;
@@ -103,9 +105,11 @@ const { label, heading, highlight, intro, primaryCta, secondaryCta, image, image
       display: flex;
       width: 100%;
     }
+  }
 
+  @media (max-width: 1023px) {
     .media {
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 738 / 460;
     }
   }
 

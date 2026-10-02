@@ -19,7 +19,7 @@ const { variant = 'primary', size = 'md', block = false, class: className, ...at
   </span>
   {variant === 'dark' ? (
     <span class="bubble">
-      <Icon name="arrow-right" />
+      <Icon name="arrow-up-right" />
     </span>
   ) : (
     <Icon name="arrow-up-right" />
@@ -34,6 +34,7 @@ const { variant = 'primary', size = 'md', block = false, class: className, ...at
     gap: var(--space-3);
     min-height: var(--target-min);
     border-radius: var(--radius-pill);
+    font-family: var(--font-family-display);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--tracking-wide);

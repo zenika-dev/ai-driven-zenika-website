@@ -10,37 +10,53 @@ const heading = {
 };
 
 /** Copy for the Presentation page sections, top to bottom. */
+const labelledList = z.object({
+  label: z.string().min(1),
+  items: z.array(z.string().min(1)).min(1),
+});
+
 const presentation = ({ image }: SchemaContext) =>
   z.object({
     hero: z.object({
       label: z.string().min(1),
+      intro: z.string().min(1),
       heading: z.string().min(1),
       highlight: z.string().min(1),
-      intro: z.string().min(1),
       primaryCta: z.string().min(1),
       secondaryCta: z.string().min(1),
       image: image(),
       imageAlt: z.string().min(1),
     }),
-    about: z.object({
+    expertises: z.object({
       eyebrow: z.string().min(1),
       heading: z.string().min(1),
       highlight: z.string().min(1),
-      lead: z.string().min(1),
-      body: z.string().min(1),
-      stats: z.array(z.object({ value: z.string().min(1), label: z.string().min(1) })).length(4),
-    }),
-    offers: z.object({
-      ...heading,
-      items: z
-        .array(z.object({ badge: z.string().min(1), title: z.string().min(1), text: z.string() }))
-        .length(3),
+      conclusion: z.string().min(1),
+      conclusionHighlight: z.string().min(1),
+      problems: labelledList,
+      outcomes: labelledList,
+      levers: z.array(z.object({ title: z.string().min(1), text: z.string().min(1) })).length(3),
     }),
     approach: z.object({
-      ...heading,
-      items: z.array(z.object({ title: z.string().min(1), text: z.string().min(1) })).length(3),
+      eyebrow: z.string().min(1),
+      heading: z.string().min(1),
+      commitments: z.array(z.string().min(1)).min(1),
     }),
-    clients: z.object({ ...heading, names: z.array(z.string().min(1)).min(1) }),
+    values: z.object({
+      eyebrow: z.string().min(1),
+      heading: z.string().min(1),
+      highlight: z.string().min(1),
+      paragraphs: z.array(z.string().min(1)).min(1),
+      list: z.array(z.string().min(1)).min(1),
+      closing: z.string().min(1),
+      stats: z.array(z.object({ value: z.string().min(1), label: z.string().min(1) })).length(4),
+    }),
+    clients: z.object({
+      eyebrow: z.string().min(1),
+      heading: z.string().min(1),
+      points: z.array(z.string().min(1)).min(1),
+      names: z.array(z.string().min(1)).min(1),
+    }),
     publications: z.object({
       ...heading,
       items: z.array(z.object({ kind: z.string().min(1), title: z.string().min(1) })).length(3),

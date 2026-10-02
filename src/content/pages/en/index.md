@@ -1,61 +1,88 @@
 ---
-# DRAFT translation of the French mockup copy — pending Zenika marketing review.
+# DRAFT translation of the French Figma copy — pending Zenika marketing review.
 title: Presentation
-description: 'Zenika, a consulting, engineering and training firm: your technology partner, close at hand.'
+description: 'Zenika, a consulting, delivery and training firm: the technology partner close at hand that increases the business impact of your information system.'
 presentation:
   hero:
-    label: Consulting · Engineering · Training
-    heading: Your technology partner, close at hand.
-    highlight: close at hand.
-    intro: Together, let's increase the business impact of your information system.
+    label: Consulting · Delivery · Training
+    intro: In the age of AI and the Cloud, technology sits at the heart of business strategy, yet IT often struggles to deliver value at the expected pace.
+    heading: Zenika is the technology partner close at hand that increases the business impact of your information system.
+    highlight: information system.
     primaryCta: Let's talk about your projects
     secondaryCta: Discover Zenika
     image: ../../../assets/images/hero-team.png
     imageAlt: A Zenika team in a workshop around a screen and a board of sticky notes.
-  about:
-    eyebrow: 01 / Who we are
+  expertises:
+    eyebrow: 01 / Our expertise
+    heading: Mastering the complexity of information systems and organisations…
+    highlight: complexity of information systems
+    conclusion: … to turn IT investment into measurable business value
+    conclusionHighlight: measurable business value
+    problems:
+      label: IT complexity
+      items:
+        - Fragmented data
+        - Legacy systems
+        - Layered architecture
+        - Organisational silos
+        - Constant transformation
+        - Growing complexity
+        - Cost pressure
+    outcomes:
+      label: Measurable value
+      items:
+        - Alignment with business strategy
+        - Security, compliance, sustainability
+        - Software that fits the business
+        - Tangible benefits from AI
+        - Shorter time-to-market
+        - Continuous innovation
+    levers:
+      - title: Optimise
+        text: software assets, processes, the value of IT
+      - title: Innovate
+        text: in solutions, technologies and methods
+      - title: Transform
+        text: the organisation, its culture and skills
+  approach:
+    eyebrow: 02 / Our approach
+    heading: We bring structure, method and expertise to mission-critical projects.
+    commitments:
+      - A complete range of services
+      - Convictions in delivery
+      - A strong culture of innovation
+      - A commitment to excellence and technical expertise
+      - Active involvement in tech communities
+  values:
+    eyebrow: 03 / Our values
     heading: Our convictions come from more than 20 years of experience.
     highlight: more than 20 years of experience.
-    lead: Zenika is a technology, management and organisational consulting firm.
-    body: We support companies of all sizes through their transformations, with people and ethics at the heart of how we work. Our experts guide you with pragmatism and excellence.
+    paragraphs:
+      - Since we were founded in 2006, we have been through transformations, changes and revolutions with our clients, and today we are preparing for the shift to Artificial Intelligence.
+      - 'While these shared successes have gradually shaped our convictions and how we work, we remain true to the values behind them:'
+    list:
+      - Independent opinions, open-source convictions
+      - Ethical, responsible and sustainable
+      - Transparency, sharing, proximity
+      - Continuous improvement ("Kaizen")
+    closing: Together, let's build the information systems of the next 20 years.
     stats:
       - value: 600+
         label: Committed people
-      - value: '12'
+      - value: '14'
         label: Local agencies
       - value: '3'
         label: Continents
       - value: '1'
         label: Culture of continuous learning
-  offers:
-    eyebrow: 02 / What we do
-    heading: From decision to delivery.
-    intro: We cover the whole life cycle of your technology projects through our unique three-part offer.
-    items:
-      - badge: Consulting
-        title: Consulting & CxO Advisory
-        text: Align technology with business strategy. Agile coaching, IT architecture and product strategy.
-      - badge: Engineering
-        title: Engineering & Delivery
-        text: Build robust, high-performance, secure and eco-designed applications. Legacy modernisation, Cloud & DevOps.
-      - badge: Training
-        title: Training & Adoption
-        text: Grow your teams' skills. A complete catalogue of official and tailor-made training.
-  approach:
-    eyebrow: 03 / How we work
-    heading: Mastering the complexity of information systems and organisations to turn IT investment into measurable business value
-    intro: We bring structure, method and expertise to mission-critical projects.
-    items:
-      - title: Optimise
-        text: Improve your existing delivery processes, make your architectures more reliable and reduce operating costs.
-      - title: Innovate
-        text: Explore new technologies, design disruptive architectures and start sustainable approaches.
-      - title: Transform
-        text: Shift technical paradigms, rethink your agile organisations and support your leadership teams over time.
   clients:
     eyebrow: 04 / Our clients
     heading: The leaders of today and tomorrow.
-    intro: We work across every key sector to drive technology excellence. Our proven methods adapt to your specific challenges.
+    points:
+      - We adapt to the size and specifics of your organisation, from a start-up's first line of code to the IT departments of large enterprises
+      - Beyond technical expertise, we bring organisations of every size our methods, proven at scale
+      - We deliver efficiently in small teams, using simple, pragmatic and proven approaches
+      - We are the technical guarantors in major framework agreements and the experts on critical projects
     names:
       - Société Générale
       - TotalEnergies
@@ -65,9 +92,9 @@ presentation:
       - La Poste
       - Orange
   publications:
-    eyebrow: 05 / Publications & insights
+    eyebrow: 05 / Latest publications
     heading: Our convictions in motion.
-    intro: Resources for those who want to steer their digital transition with confidence.
+    intro: Resources for those who want to steer their digital and agentic transitions with confidence.
     items:
       - kind: White paper
         title: Taking AI from experiment to scale.
