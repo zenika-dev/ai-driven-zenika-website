@@ -51,8 +51,16 @@ const { variant = 'primary', size = 'md', block = false, class: className, ...at
   }
 
   .sm {
-    padding: var(--space-2) var(--space-4);
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
     min-height: 2.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .sm {
+      gap: var(--space-3);
+      padding-inline: var(--space-4);
+    }
   }
 
   .block {

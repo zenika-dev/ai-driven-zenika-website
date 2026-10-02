@@ -1,4 +1,6 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 import Button from '../ui/Button.astro';
 import Highlight from '../ui/Highlight.astro';
 
@@ -9,10 +11,11 @@ interface Props {
   intro: string;
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
+  image: ImageMetadata;
   imageAlt: string;
 }
 
-const { label, heading, highlight, intro, primaryCta, secondaryCta, imageAlt } = Astro.props;
+const { label, heading, highlight, intro, primaryCta, secondaryCta, image, imageAlt } = Astro.props;
 ---
 
 <section class="section hero" aria-labelledby="hero-title">
@@ -32,8 +35,15 @@ const { label, heading, highlight, intro, primaryCta, secondaryCta, imageAlt } =
         </Button>
       </div>
     </div>
-    <!-- PLACEHOLDER — replace with the Figma photo export via <Image /> from astro:assets. -->
-    <div class="media" role="img" aria-label={imageAlt}></div>
+    <Image
+      src={image}
+      alt={imageAlt}
+      class="media"
+      widths={[480, 800, 1232]}
+      sizes="(min-width: 1024px) 45vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
   </div>
 </section>
 
@@ -76,12 +86,11 @@ const { label, heading, highlight, intro, primaryCta, secondaryCta, imageAlt } =
   }
 
   .media {
+    width: 100%;
+    height: auto;
     aspect-ratio: 6 / 5;
+    object-fit: cover;
     border-radius: var(--radius-lg);
-    background:
-      linear-gradient(135deg, transparent 40%, var(--color-border) 40% 41%, transparent 41%),
-      var(--color-surface);
-    border: var(--border-width) solid var(--color-border);
   }
 
   @media (max-width: 1023px) {

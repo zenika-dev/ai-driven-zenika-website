@@ -10,6 +10,7 @@ presentation:
     intro: Together, let's increase the business impact of your information system.
     primaryCta: Let's talk about your projects
     secondaryCta: Discover Zenika
+    image: ../../../assets/images/hero-team.png
     imageAlt: A Zenika team in a workshop around a screen and a board of sticky notes.
   about:
     eyebrow: 01 / Who we are

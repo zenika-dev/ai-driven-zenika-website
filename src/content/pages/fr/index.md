@@ -10,6 +10,7 @@ presentation:
     intro: Ensemble, augmentons l'impact métier de votre Système d'Information.
     primaryCta: Parlons de vos projets
     secondaryCta: Découvrir Zenika
+    image: ../../../assets/images/hero-team.png
     imageAlt: Une équipe Zenika en atelier autour d'un écran et d'un tableau de post-it.
   about:
     eyebrow: 01 / Qui sommes-nous

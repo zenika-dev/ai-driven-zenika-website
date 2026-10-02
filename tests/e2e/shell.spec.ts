@@ -69,3 +69,28 @@ test.describe('without JavaScript', () => {
     await expect(page).toHaveURL(pageUrl(firstLocale, ctaPage));
   });
 });
+
+test('logo has an accessible name and follows the theme', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto(pageUrl(firstLocale, 'index'));
+  const headerLogo = page.locator('header .brand img:visible');
+  await expect(headerLogo).toHaveCount(1);
+  await expect(headerLogo).toHaveAttribute('alt', /\S/);
+  const lightSrc = await headerLogo.getAttribute('src');
+
+  await page.locator('[data-theme-toggle]').click();
+  await expect(page.locator('header .brand img:visible')).toHaveCount(1);
+  expect(await page.locator('header .brand img:visible').getAttribute('src')).not.toBe(lightSrc);
+
+  await expect(page.locator('footer .brand img:visible')).toHaveCount(1);
+});
+
+test('header fits on one row', async ({ page }) => {
+  await page.goto(pageUrl(firstLocale, 'index'));
+  const brand = await page.locator('header .brand').boundingBox();
+  const cta = await page.locator(`header a[href="${pageUrl(firstLocale, ctaPage)}"]`).boundingBox();
+  expect(brand && cta).toBeTruthy();
+  if (!brand || !cta) return;
+  const centre = (box: { y: number; height: number }) => box.y + box.height / 2;
+  expect(Math.abs(centre(brand) - centre(cta))).toBeLessThan(8);
+});

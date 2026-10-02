@@ -32,6 +32,13 @@ for (const locale of locales) {
       await expect(page.locator('#about')).toBeInViewport();
     });
 
+    test('hero photo loads with its alt text', async ({ page }) => {
+      const photo = page.locator('section').first().locator('img');
+      await expect(photo).toHaveAttribute('alt', /\S/);
+      await expect(photo).toHaveJSProperty('complete', true);
+      expect(await photo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+    });
+
     test('shows 4 stats, 3 offers, 3 approach cards, 3 publications and the clients', async ({
       page,
     }) => {

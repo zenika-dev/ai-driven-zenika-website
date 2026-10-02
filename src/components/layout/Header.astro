@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import { ctaPage, pagePath } from '../../i18n/routes';
 import { t } from '../../i18n/utils';
 import Button from '../ui/Button.astro';
+import Logo from '../ui/Logo.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import Nav from './Nav.astro';
 import ThemeToggle from './ThemeToggle.astro';
@@ -19,12 +20,11 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
 <header class="site-header">
   <div class="container inner">
     <a class="brand" href={getRelativeLocaleUrl(locale)}>
-      {tr('site.name')}
+      <Logo alt={tr('site.name')} />
     </a>
     <Nav locale={locale} />
     <div class="tools">
       <LanguageSwitcher locale={locale} />
-      <ThemeToggle label={tr('theme.toggle')} />
       <Button
         href={ctaHref}
         size="sm"
@@ -33,6 +33,7 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
         <span class="cta-long">{tr('header.cta')}</span>
         <span class="cta-short">{tr('header.ctaShort')}</span>
       </Button>
+      <ThemeToggle label={tr('theme.toggle')} />
     </div>
   </div>
 </header>
@@ -52,7 +53,7 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-2) var(--space-6);
+    gap: var(--space-2) var(--space-3);
     min-height: var(--header-height);
     padding-block: var(--space-3);
   }
@@ -61,17 +62,12 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
     display: inline-flex;
     align-items: center;
     min-height: var(--target-min);
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-black);
-    letter-spacing: var(--tracking-tight);
-    text-decoration: none;
-    text-transform: lowercase;
   }
 
   .tools {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-2);
     margin-inline-start: auto;
   }
 
@@ -80,6 +76,14 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
   }
 
   @media (min-width: 640px) {
+    .inner {
+      column-gap: var(--space-6);
+    }
+
+    .tools {
+      gap: var(--space-3);
+    }
+
     .cta-long {
       display: inline;
     }
