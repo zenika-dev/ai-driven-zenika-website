@@ -69,3 +69,40 @@ test.describe('without JavaScript', () => {
     await expect(page).toHaveURL(pageUrl(firstLocale, ctaPage));
   });
 });
+
+test('logo has an accessible name and follows the theme', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto(pageUrl(firstLocale, 'index'));
+  const headerLogo = page.locator('header .brand img:visible');
+  await expect(headerLogo).toHaveCount(1);
+  await expect(headerLogo).toHaveAttribute('alt', /\S/);
+  const lightSrc = await headerLogo.getAttribute('src');
+
+  await page.locator('[data-theme-toggle]').click();
+  await expect(page.locator('header .brand img:visible')).toHaveCount(1);
+  expect(await page.locator('header .brand img:visible').getAttribute('src')).not.toBe(lightSrc);
+
+  await expect(page.locator('footer .brand img:visible')).toHaveCount(1);
+});
+
+// Runs at the 1280px and 375px projects. (At tablet widths, 640–1023px, the nav
+// intentionally sits on its own second row, as in the 834px Figma frame.)
+test('header fits on one row', async ({ page }) => {
+  await page.goto(pageUrl(firstLocale, 'index'));
+  const controls = page.locator(
+    'header .brand, header nav a:visible, header [data-theme-toggle]:visible, header a.button',
+  );
+  const boxes = (await controls.evaluateAll((elements) =>
+    elements.map((el) => {
+      const { top, height } = el.getBoundingClientRect();
+      return { label: el.textContent?.trim() || el.className, centre: top + height / 2 };
+    }),
+  )) as { label: string; centre: number }[];
+
+  // Logo, nav link(s), FR, EN, theme toggle and CTA on desktop; nav hidden on mobile.
+  expect(boxes.length).toBeGreaterThanOrEqual(5);
+  const [first] = boxes;
+  for (const box of boxes) {
+    expect(Math.abs(box.centre - (first?.centre ?? 0)), box.label).toBeLessThan(8);
+  }
+});

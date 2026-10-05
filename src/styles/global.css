@@ -37,6 +37,7 @@ h1,
 h2,
 h3 {
   margin-block: 0 var(--space-4);
+  font-family: var(--font-family-display);
   font-weight: var(--font-weight-black);
   letter-spacing: var(--tracking-tight);
   line-height: var(--line-height-tight);
@@ -45,6 +46,7 @@ h3 {
 
 h1 {
   font-size: var(--font-size-3xl);
+  line-height: var(--line-height-display);
 }
 
 h2 {
@@ -90,7 +92,7 @@ a:hover {
 
 /* Full-width page bands. Each section holds its own .container. */
 .section {
-  padding-block: var(--section-padding);
+  padding-block: var(--section-padding-top) var(--section-padding-bottom);
   scroll-margin-top: var(--header-height);
 }
 

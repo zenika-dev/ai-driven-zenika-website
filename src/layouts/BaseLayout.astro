@@ -1,4 +1,5 @@
 ---
+import { Font } from 'astro:assets';
 import { getAbsoluteLocaleUrl } from 'astro:i18n';
 import Footer from '../components/layout/Footer.astro';
 import Header from '../components/layout/Header.astro';
@@ -33,6 +34,9 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <Font cssVariable="--font-montserrat" preload />
+    <Font cssVariable="--font-nunito" preload />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

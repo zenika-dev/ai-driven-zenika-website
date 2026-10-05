@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import logoDark from '../../assets/brand/zenika-logo.png';
+import logoLight from '../../assets/brand/zenika-logo-light.png';
+
+/**
+ * Zenika logo. `tone="auto"` follows the theme; `tone="light"` is for always-dark surfaces.
+ * zenika-logo-light.png is derived from the official PNG (wordmark recoloured white)
+ * until an official light/SVG version is supplied.
+ */
+interface Props {
+  alt: string;
+  tone?: 'auto' | 'light';
+}
+
+const { alt, tone = 'auto' } = Astro.props;
+---
+
+{tone === 'auto' && <Image src={logoDark} alt={alt} class="logo on-light" loading="eager" />}
+<Image
+  src={logoLight}
+  alt={alt}
+  class:list={['logo', { 'on-dark': tone === 'auto' }]}
+  loading="eager"
+/>
+
+<style>
+  .logo {
+    display: block;
+    width: auto;
+    height: var(--logo-height);
+  }
+
+  @media (min-width: 640px) {
+    .logo {
+      height: var(--logo-height-md);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .logo {
+      height: var(--logo-height-lg);
+    }
+  }
+
+  .on-dark {
+    display: none;
+  }
+
+  :global(:root[data-theme='dark']) .on-light {
+    display: none;
+  }
+
+  :global(:root[data-theme='dark']) .on-dark {
+    display: block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme])) .on-light {
+      display: none;
+    }
+
+    :global(:root:not([data-theme])) .on-dark {
+      display: block;
+    }
+  }
+</style>
