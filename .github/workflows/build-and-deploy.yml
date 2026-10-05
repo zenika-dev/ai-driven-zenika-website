@@ -12,11 +12,10 @@ jobs:
       - run: sudo npm install --global clever-tools@^4.11.0
       - run: clever version
       - run: |
-          if [ -z "${CLEVER_TOKEN}" ] || [ -z "${CLEVER_SECRET}" ]; then
+          if [ -z "$CLEVER_TOKEN" ] || [ -z "$CLEVER_SECRET" ]; then
             echo "ERROR: CLEVER_TOKEN and/or CLEVER_SECRET are empty."
-            echo "The 'clever-cloud2-zenika-dev' context is not attached to this job,"
-            echo "or the variables were removed from it."
-            echo "See .circleci/CLEVER_AUTH.md"
+            echo "aborting..."
+            echo "See CLEVER_AUTH.md"
             exit 1
           fi
 
@@ -24,13 +23,13 @@ jobs:
             echo "ERROR: Clever Cloud rejected the CI credentials."
             echo "CLEVER_TOKEN/CLEVER_SECRET are set but the API returned an auth error"
             echo "(most often: the token has passed its 1-year expiry, or was revoked)."
-            echo "Rotate the credentials -- see .circleci/CLEVER_AUTH.md"
+            echo "Rotate the credentials -- see .CLEVER_AUTH.md"
             echo "--- clever output ---"
             echo "${PROFILE}"
             exit 1
           fi
 
-          echo "${PROFILE}" | jq -r '"Authenticated as \(.email) (profile: \(.alias))"'
+          echo "$PROFILE" | jq -r '"Authenticated as \(.email) (profile: \(.alias))"'
 
           EXPIRY=$(echo "${PROFILE}" | jq -r '.tokenExpiration')
           DAYS_LEFT=$(( ( $(date -d "${EXPIRY}" +%s) - $(date +%s) ) / 86400 ))
