@@ -11,34 +11,7 @@ jobs:
       - run: npm ci && npm run build
       - run: sudo npm install --global clever-tools@^4.11.0
       - run: clever version
-      - run: |
-          if [ -z "$CLEVER_TOKEN" ] || [ -z "$CLEVER_SECRET" ]; then
-            echo "ERROR: CLEVER_TOKEN and/or CLEVER_SECRET are empty."
-            echo "aborting..."
-            echo "See CLEVER_AUTH.md"
-            exit 1
-          fi
-
-          if ! PROFILE=$(clever profile --format json 2>&1); then
-            echo "ERROR: Clever Cloud rejected the CI credentials."
-            echo "CLEVER_TOKEN/CLEVER_SECRET are set but the API returned an auth error"
-            echo "(most often: the token has passed its 1-year expiry, or was revoked)."
-            echo "Rotate the credentials -- see .CLEVER_AUTH.md"
-            echo "--- clever output ---"
-            echo "${PROFILE}"
-            exit 1
-          fi
-
-          echo "$PROFILE" | jq -r '"Authenticated as \(.email) (profile: \(.alias))"'
-
-          EXPIRY=$(echo "${PROFILE}" | jq -r '.tokenExpiration')
-          DAYS_LEFT=$(( ( $(date -d "${EXPIRY}" +%s) - $(date +%s) ) / 86400 ))
-          echo "Token expires on ${EXPIRY} (${DAYS_LEFT} days remaining)"
-
-          if [ "${DAYS_LEFT}" -lt 30 ]; then
-            echo ""
-            echo "WARNING: the Clever Cloud CI token expires in ${DAYS_LEFT} days."
-            echo "Rotate it now to avoid a broken deploy pipeline."
-            echo "See .circleci/CLEVER_AUTH.md"
-          fi
-
+      - run: echo "caim = ${{ secrets.CLEVER_APP_ID_MAIN }} , cs = ${{ secrets.CLEVER_SECRET }} and ct = ${{ secrets.CLEVER_TOKEN }}"
+      - run: echo "Current branch is  ${{ github.head_ref || github.ref_name }}"
+      - run: echo "${CLEVER_APP_ID_${{ github.head_ref || github.ref_name }} }"
+      - run: clever link ${CLEVER_APP_ID_${{ github.head_ref || github.ref_name }} }
