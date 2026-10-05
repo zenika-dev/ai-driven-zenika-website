@@ -13,5 +13,5 @@ jobs:
       - run: clever version
       - run: echo "Current branch is ${{ github.head_ref || github.ref_name }}"
       - run: echo "caim = ${{ env.CLEVER_APP_ID_MAIN }} , cs = ${{ secrets.CLEVER_SECRET }} and ct = ${{ secrets.CLEVER_TOKEN }}"
-      - run: echo "${CLEVER_APP_ID_${{ github.head_ref || github.ref_name }} } and caim = ${{ vars.CLEVER_APP_ID_MAIN }}"
+      - run: echo " ${{env.CLEVER_APP_ID_MAIN }} and caim = ${{ vars.CLEVER_APP_ID_MAIN }}"
       - run: clever link ${{env.CLEVER_APP_ID_MAIN }}
