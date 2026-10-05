@@ -11,7 +11,7 @@ jobs:
       - run: npm ci && npm run build
       - run: sudo npm install --global clever-tools@^4.11.0
       - run: clever version
-      - run: echo "caim = ${{ secrets.CLEVER_APP_ID_MAIN }} , cs = ${{ secrets.CLEVER_SECRET }} and ct = ${{ secrets.CLEVER_TOKEN }}"
+      - run: echo "caim = ${{ env.CLEVER_APP_ID_MAIN }} , cs = ${{ secrets.CLEVER_SECRET }} and ct = ${{ secrets.CLEVER_TOKEN }}"
       - run: echo "Current branch is  ${{ github.head_ref || github.ref_name }}"
       - run: echo "${CLEVER_APP_ID_${{ github.head_ref || github.ref_name }} }"
       - run: clever link ${CLEVER_APP_ID_${{ github.head_ref || github.ref_name }} }
