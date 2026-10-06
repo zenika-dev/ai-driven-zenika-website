@@ -19,7 +19,7 @@ jobs:
 
       - run: echo "Current branch is '$CURRENT_BRANCH'"
 
-      - run: echo "DEBUG > CLEVER_SECRET = $CLEVER_SECRET , CLEVER_TOKEN = $CLEVER_TOKEN and CLEVER_APP_ID = $CLEVER_APP_ID"
+      - run: echo "DEBUG > CLEVER_SECRET = $CLEVER_SECRET , CLEVER_TOKEN = $CLEVER_TOKEN and CLEVER_APP_ID = $CLEVER_APP_ID "
       
       # - run: clever login --secret ${{ secrets.CLEVER_SECRET }} --token ${{ secrets.CLEVER_TOKEN }}
       # - run: clever link ${{env.CLEVER_APP_ID_MAIN }}
