@@ -7,17 +7,19 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     env:
-      CLEVER_SECRET: "secrets.CLEVER_SECRET"
-      CLEVER_TOKEN: "secrets.CLEVER_TOKEN"
+      CLEVER_SECRET: secrets.CLEVER_SECRET
+      CLEVER_TOKEN: secrets.CLEVER_TOKEN
+      CLEVER_APP_ID: ${{ vars.CLEVER_APP_ID }}
       CURRENT_BRANCH: ${{github.head_ref || github.ref_name}}
     steps:
       - uses: actions/checkout@v4
       # - run: npm ci && npm run build
       # - run: sudo npm install --global clever-tools@^4.11.0
       # - run: clever version
+
       - run: echo "Current branch is '$CURRENT_BRANCH'"
 
-      - run: echo "caim = ${{ env.CLEVER_APP_ID_MAIN }} , cs = ${{ secrets.CLEVER_SECRET }} and ct = ${{ secrets.CLEVER_TOKEN }}"
-      - run: echo "eaim= ${{env.CLEVER_APP_ID_MAIN }} and caim = ${{ vars.CLEVER_APP_ID_MAIN }}"
+      - run: echo "DEBUG > CLEVER_SECRET = $CLEVER_SECRET , CLEVER_TOKEN = $CLEVER_TOKEN and CLEVER_APP_ID = $CLEVER_APP_ID"
+      
       # - run: clever login --secret ${{ secrets.CLEVER_SECRET }} --token ${{ secrets.CLEVER_TOKEN }}
       # - run: clever link ${{env.CLEVER_APP_ID_MAIN }}
