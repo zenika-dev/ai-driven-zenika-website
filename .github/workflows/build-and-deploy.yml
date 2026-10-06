@@ -13,13 +13,10 @@ jobs:
       CURRENT_BRANCH: ${{github.head_ref || github.ref_name}}
     steps:
       - uses: actions/checkout@v4
-      # - run: npm ci && npm run build
-      # - run: sudo npm install --global clever-tools@^4.11.0
-      # - run: clever version
-
+      - run: npm ci && npm run build
+      - run: sudo npm install --global clever-tools@^4.11.0
+      - run: clever version
       - run: echo "Current branch is '$CURRENT_BRANCH'"
-
       - run: echo "DEBUG > CLEVER_SECRET = $CLEVER_SECRET , CLEVER_TOKEN = $CLEVER_TOKEN and CLEVER_APP_ID = $CLEVER_APP_ID "
-      
-      # - run: clever login --secret ${{ secrets.CLEVER_SECRET }} --token ${{ secrets.CLEVER_TOKEN }}
-      # - run: clever link ${{env.CLEVER_APP_ID_MAIN }}
+      - run: clever login --secret $CLEVER_SECRET --token $CLEVER_TOKEN
+      - run: clever link $CLEVER_APP_ID
