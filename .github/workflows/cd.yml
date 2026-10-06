@@ -1,0 +1,59 @@
+name: CD
+
+# Deploys to Clever Cloud when a change lands on main, once CI passes on that commit.
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+# Never run two deploys at once, and never cancel one that is already running.
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    name: Deploy to Clever Cloud
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
+      CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
+      CLEVER_APP_ID: ${{ vars.CLEVER_APP_ID_MAIN }}
+    steps:
+      - name: Check deploy configuration
+        run: |
+          missing=0
+          for name in CLEVER_TOKEN CLEVER_SECRET CLEVER_APP_ID; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is not set. Add it under Settings > Secrets and variables > Actions."
+              missing=1
+            fi
+          done
+          exit $missing
+
+      - uses: actions/checkout@v5
+        with:
+          # clever deploy pushes the git history to Clever Cloud, so it needs all of it.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install clever-tools
+        run: npm install --global clever-tools@^4.11.0
+
+      # clever-tools reads CLEVER_TOKEN and CLEVER_SECRET from the environment, so no login step.
+      - name: Link the Clever Cloud application
+        run: clever link "$CLEVER_APP_ID"
+
+      - name: Deploy
+        run: clever deploy
