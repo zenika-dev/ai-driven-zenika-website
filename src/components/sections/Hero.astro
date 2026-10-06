@@ -22,10 +22,10 @@ const { label, intro, heading, highlight, primaryCta, secondaryCta, image, image
   <div class="container grid">
     <div class="copy">
       <p class="label">{label}</p>
-      <p class="intro">{intro}</p>
       <h1 id="hero-title">
         <Highlight text={heading} highlight={highlight} />
       </h1>
+      <p class="intro">{intro}</p>
       <div class="actions">
         <Button href={primaryCta.href} variant="dark" class="primary-cta">
           {primaryCta.label}
@@ -77,7 +77,7 @@ const { label, intro, heading, highlight, primaryCta, secondaryCta, image, image
   }
 
   h1 {
-    margin-block-end: var(--space-6);
+    margin-block-end: var(--space-5);
   }
 
   .actions {

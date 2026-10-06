@@ -10,61 +10,56 @@ const heading = {
 };
 
 /** Copy for the Presentation page sections, top to bottom. */
-const labelledList = z.object({
-  label: z.string().min(1),
-  items: z.array(z.string().min(1)).min(1),
-});
+const text = z.string().min(1);
 
 const presentation = ({ image }: SchemaContext) =>
   z.object({
     hero: z.object({
-      label: z.string().min(1),
-      intro: z.string().min(1),
-      heading: z.string().min(1),
-      highlight: z.string().min(1),
-      primaryCta: z.string().min(1),
-      secondaryCta: z.string().min(1),
+      label: text,
+      heading: text,
+      highlight: text,
+      intro: text,
+      primaryCta: text,
+      secondaryCta: text,
       image: image(),
-      imageAlt: z.string().min(1),
-    }),
-    expertises: z.object({
-      eyebrow: z.string().min(1),
-      heading: z.string().min(1),
-      highlight: z.string().min(1),
-      conclusion: z.string().min(1),
-      conclusionHighlight: z.string().min(1),
-      problems: labelledList,
-      outcomes: labelledList,
-      levers: z.array(z.object({ title: z.string().min(1), text: z.string().min(1) })).length(3),
-    }),
-    approach: z.object({
-      eyebrow: z.string().min(1),
-      heading: z.string().min(1),
-      commitments: z.array(z.string().min(1)).min(1),
+      imageAlt: text,
     }),
     values: z.object({
-      eyebrow: z.string().min(1),
-      heading: z.string().min(1),
-      highlight: z.string().min(1),
-      paragraphs: z.array(z.string().min(1)).min(1),
-      list: z.array(z.string().min(1)).min(1),
-      closing: z.string().min(1),
-      stats: z.array(z.object({ value: z.string().min(1), label: z.string().min(1) })).length(4),
+      eyebrow: text,
+      heading: text,
+      highlight: text,
+      lead: text,
+      text,
+      stats: z.array(z.object({ value: text, label: text })).length(4),
+    }),
+    services: z.object({
+      ...heading,
+      items: z.array(z.object({ tag: text, title: text, text })).length(3),
+    }),
+    methodology: z.object({
+      eyebrow: text,
+      heading: text,
+      highlight: text,
+      intro: text,
+      levers: z.array(z.object({ title: text, text })).length(3),
     }),
     clients: z.object({
-      eyebrow: z.string().min(1),
-      heading: z.string().min(1),
-      points: z.array(z.string().min(1)).min(1),
-      names: z.array(z.string().min(1)).min(1),
+      ...heading,
+      names: z.array(text).min(1),
     }),
     publications: z.object({
       ...heading,
-      items: z.array(z.object({ kind: z.string().min(1), title: z.string().min(1) })).length(3),
+      items: z.array(z.object({ kind: text, title: text })).length(3),
     }),
   });
 
 /** Copy for the "Parlons-nous" block, shown on the Contact page and at the end of Presentation. */
-const contact = z.object({ ...heading, ctaLabel: z.string().min(1) });
+const field = z.object({ label: text, placeholder: text });
+const contact = z.object({
+  ...heading,
+  ctaLabel: text,
+  form: z.object({ name: field, email: field, company: field, project: field, subject: text }),
+});
 
 /** Page copy: src/content/pages/{locale}/{page}.md, entry id `{locale}/{page}`. */
 const pages = defineCollection({

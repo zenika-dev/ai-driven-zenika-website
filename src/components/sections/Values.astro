@@ -6,13 +6,12 @@ interface Props {
   eyebrow: string;
   heading: string;
   highlight: string;
-  paragraphs: string[];
-  list: string[];
-  closing: string;
+  lead: string;
+  text: string;
   stats: { value: string; label: string }[];
 }
 
-const { eyebrow, heading, highlight, paragraphs, list, closing, stats } = Astro.props;
+const { eyebrow, heading, highlight, lead, text, stats } = Astro.props;
 const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
 ---
 
@@ -26,15 +25,8 @@ const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
         </h2>
       </div>
       <div class="body">
-        {paragraphs.map((text) => (
-          <p>{text}</p>
-        ))}
-        <ul>
-          {list.map((item) => (
-            <li>{item}</li>
-          ))}
-        </ul>
-        <p class="closing">{closing}</p>
+        <p class="lead">{lead}</p>
+        <p>{text}</p>
       </div>
     </div>
     <dl class="stats">
@@ -68,13 +60,8 @@ const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
     margin: 0;
   }
 
-  .body ul {
-    margin: 0;
-    padding-inline-start: var(--space-5);
-  }
-
-  .body .closing {
-    margin-block-start: var(--space-5);
+  .body .lead {
+    margin-block-end: var(--space-4);
     color: var(--color-text);
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);

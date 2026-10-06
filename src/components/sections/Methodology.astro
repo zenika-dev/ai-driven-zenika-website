@@ -1,0 +1,123 @@
+---
+import Eyebrow from '../ui/Eyebrow.astro';
+import Highlight from '../ui/Highlight.astro';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  highlight: string;
+  intro: string;
+  levers: { title: string; text: string }[];
+}
+
+const { eyebrow, heading, highlight, intro, levers } = Astro.props;
+const tones = ['brand', 'indigo', 'teal'] as const;
+---
+
+<section id="methodology" class="section section--inverse" aria-labelledby="methodology-title">
+  <div class="container">
+    <Eyebrow text={eyebrow} />
+    <div class="head">
+      <h2 id="methodology-title">
+        <Highlight text={heading} highlight={highlight} />
+      </h2>
+      <p class="intro">{intro}</p>
+    </div>
+    <ul class="levers">
+      {levers.map(({ title, text }, i) => (
+        <li class:list={['lever', tones[i % tones.length]]}>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-5) var(--space-8);
+    align-items: end;
+    margin-block-end: var(--heading-gap);
+  }
+
+  h2 {
+    max-width: 16em;
+    font-size: var(--font-size-2xl-sm);
+    line-height: var(--line-height-tight);
+  }
+
+  .intro {
+    margin: 0;
+    color: var(--color-inverse-text-soft);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-base);
+  }
+
+  .levers {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lever {
+    --glow: var(--brand-red);
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    min-height: 13rem;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(
+        40% 50% at 100% 100%,
+        color-mix(in srgb, var(--glow) 55%, transparent),
+        transparent 70%
+      ),
+      var(--color-surface);
+  }
+
+  .lever.indigo {
+    --glow: var(--brand-indigo);
+  }
+
+  .lever.teal {
+    --glow: var(--brand-teal);
+  }
+
+  .lever h3 {
+    margin: 0;
+    font-size: var(--font-size-card-title);
+    font-weight: var(--font-weight-black);
+  }
+
+  .lever p {
+    margin: 0;
+    color: var(--color-inverse-text-soft);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-base);
+  }
+
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .levers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .lever:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .head {
+      grid-template-columns: minmax(0, 1fr) 22rem;
+    }
+
+    .levers {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

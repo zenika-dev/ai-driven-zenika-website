@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { ctaPage, navPages } from '../../src/i18n/routes';
+import { ctaPage, navSections } from '../../src/i18n/routes';
 import { defaultLocale, locales, pageUrl } from '../helpers/routes';
 
 const firstLocale = defaultLocale;
@@ -19,13 +19,13 @@ test('skip link is the first focusable element and moves focus to main', async (
   await expect(page.locator('main#main')).toBeFocused();
 });
 
-test('main nav lists only the nav pages; the CTA marks the contact page', async ({ page }) => {
+test('main nav lists the home page sections; the CTA marks the contact page', async ({ page }) => {
   await page.goto(pageUrl(firstLocale, ctaPage));
   // The main nav is hidden below 640px (the logo links home), so count it without visibility.
   const links = page.locator('header nav.main-nav a');
-  await expect(links).toHaveCount(navPages.length);
-  for (const [i, navPage] of navPages.entries()) {
-    await expect(links.nth(i)).toHaveAttribute('href', pageUrl(firstLocale, navPage));
+  await expect(links).toHaveCount(navSections.length);
+  for (const [i, id] of navSections.entries()) {
+    await expect(links.nth(i)).toHaveAttribute('href', `${pageUrl(firstLocale, 'index')}#${id}`);
   }
   await expect(page.locator('header a[aria-current="page"]')).toHaveAttribute(
     'href',

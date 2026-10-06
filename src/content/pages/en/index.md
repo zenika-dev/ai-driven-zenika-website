@@ -4,85 +4,59 @@ title: Presentation
 description: 'Zenika, a consulting, delivery and training firm: the technology partner close at hand that increases the business impact of your information system.'
 presentation:
   hero:
-    label: Consulting · Delivery · Training
-    intro: In the age of AI and the Cloud, technology sits at the heart of business strategy, yet IT often struggles to deliver value at the expected pace.
-    heading: Zenika is the technology partner close at hand that increases the business impact of your information system.
-    highlight: information system.
+    label: Consulting · Engineering · Training
+    heading: Your technology partner, close at hand.
+    highlight: close at hand.
+    intro: Together, let's increase the business impact of your information system.
     primaryCta: Let's talk about your projects
     secondaryCta: Discover Zenika
     image: ../../../assets/images/hero-meeting.png
     imageAlt: A Zenika team meeting around a glass table in a bright office.
-  expertises:
-    eyebrow: 01 / Our expertise
-    heading: Mastering the complexity of information systems and organisations…
-    highlight: complexity of information systems
-    conclusion: … to turn IT investment into measurable business value
-    conclusionHighlight: measurable business value
-    problems:
-      label: IT complexity
-      items:
-        - Fragmented data
-        - Legacy systems
-        - Layered architecture
-        - Organisational silos
-        - Constant transformation
-        - Growing complexity
-        - Cost pressure
-    outcomes:
-      label: Measurable value
-      items:
-        - Alignment with business strategy
-        - Security, compliance, sustainability
-        - Software that fits the business
-        - Tangible benefits from AI
-        - Shorter time-to-market
-        - Continuous innovation
-    levers:
-      - title: Optimise
-        text: software assets, processes, the value of IT
-      - title: Innovate
-        text: in solutions, technologies and methods
-      - title: Transform
-        text: the organisation, its culture and skills
-  approach:
-    eyebrow: 02 / Our approach
-    heading: We bring structure, method and expertise to mission-critical projects.
-    commitments:
-      - A complete range of services
-      - Convictions in delivery
-      - A strong culture of innovation
-      - A commitment to excellence and technical expertise
-      - Active involvement in tech communities
   values:
-    eyebrow: 03 / Our values
+    eyebrow: 01 / Who we are
     heading: Our convictions come from more than 20 years of experience.
     highlight: more than 20 years of experience.
-    paragraphs:
-      - Since we were founded in 2006, we have been through transformations, changes and revolutions with our clients, and today we are preparing for the shift to Artificial Intelligence.
-      - 'While these shared successes have gradually shaped our convictions and how we work, we remain true to the values behind them:'
-    list:
-      - Independent opinions, open-source convictions
-      - Ethical, responsible and sustainable
-      - Transparency, sharing, proximity
-      - Continuous improvement ("Kaizen")
-    closing: Together, let's build the information systems of the next 20 years.
+    lead: Zenika is a technology, management and organisation consultancy.
+    text: We support companies of every size through their transformations, putting people and ethics at the heart of our approach. Our experts guide you with pragmatism and excellence.
     stats:
       - value: 600+
         label: Committed people
-      - value: '14'
+      - value: '12'
         label: Local agencies
       - value: '3'
         label: Continents
       - value: '1'
         label: Culture of continuous learning
+  services:
+    eyebrow: 02 / What we do
+    heading: From decision to delivery.
+    intro: We cover the whole life cycle of your technology projects through our unique three-part offer.
+    items:
+      - tag: Consulting
+        title: Consulting & CxO Advisory
+        text: Aligning technology with business strategy. Agile coaching, IT architecture and product strategy.
+      - tag: Engineering
+        title: Engineering & Delivery
+        text: Building robust, high-performing, secure and eco-designed applications. Legacy modernisation, Cloud & DevOps.
+      - tag: Training
+        title: Training & Adoption
+        text: Growing your teams' skills. A full catalogue of official and tailor-made training courses.
+  methodology:
+    eyebrow: 03 / How we work
+    heading: Mastering the complexity of information systems and organisations to turn IT investment into measurable business value
+    highlight: measurable business value
+    intro: We bring structure, method and expertise to mission-critical projects.
+    levers:
+      - title: Optimise
+        text: Improve your existing delivery processes, make your architectures more reliable and cut operating costs.
+      - title: Innovate
+        text: Explore new technologies, design disruptive architectures and start sustainable approaches.
+      - title: Transform
+        text: Change technical paradigm, rethink your agile organisations and support your leadership teams for the long term.
   clients:
     eyebrow: 04 / Our clients
     heading: The leaders of today and tomorrow.
-    points:
-      - We adapt to the size and specifics of your organisation, from a start-up's first line of code to the IT departments of large enterprises
-      - Beyond technical expertise, we bring organisations of every size our methods, proven at scale
-      - We deliver efficiently in small teams, using simple, pragmatic and proven approaches
-      - We are the technical guarantors in major framework agreements and the experts on critical projects
+    intro: We work across all key sectors to drive technology excellence. Our robust methods adapt to your specific challenges.
     names:
       - Société Générale
       - TotalEnergies
@@ -92,7 +66,7 @@ presentation:
       - La Poste
       - Orange
   publications:
-    eyebrow: 05 / Latest publications
+    eyebrow: 05 / Publications & news
     heading: Our convictions in motion.
     intro: Resources for those who want to steer their digital and agentic transitions with confidence.
     items:

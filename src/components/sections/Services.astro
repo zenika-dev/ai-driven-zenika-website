@@ -1,0 +1,103 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  items: { tag: string; title: string; text: string }[];
+}
+
+const { eyebrow, heading, intro, items } = Astro.props;
+const tones = ['brand', 'teal', 'indigo'] as const;
+---
+
+<section id="services" class="section" aria-labelledby="services-title">
+  <div class="container">
+    <SectionHeading id="services-title" eyebrow={eyebrow} heading={heading} intro={intro} />
+    <ul class="cards">
+      {items.map(({ tag, title, text }, i) => (
+        <li class:list={['card', tones[i % tones.length]]}>
+          <p class="tag">{tag}</p>
+          <h3>{title}</h3>
+          <p class="text">{text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cards {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+  }
+
+  .tag {
+    justify-self: start;
+    margin: 0 0 var(--space-3);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .brand .tag {
+    background: var(--color-tint-brand);
+    color: var(--color-tint-brand-text);
+  }
+
+  .teal .tag {
+    background: var(--color-tint-teal);
+    color: var(--color-tint-teal-text);
+  }
+
+  .indigo .tag {
+    background: var(--color-tint-indigo);
+    color: var(--color-tint-indigo-text);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: var(--font-size-card-title);
+    font-weight: var(--font-weight-black);
+  }
+
+  .text {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-base);
+  }
+
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { navPages, pagePath } from '../../i18n/routes';
+import { navSections, pagePath } from '../../i18n/routes';
 import { t } from '../../i18n/utils';
 
 interface Props {
@@ -9,19 +9,16 @@ interface Props {
 
 const { locale } = Astro.props;
 const tr = t(locale);
-const items = navPages.map((page) => {
-  const href = getRelativeLocaleUrl(locale, pagePath(page));
-  return { href, label: tr(`nav.${page}`), current: Astro.url.pathname === href };
-});
+const home = getRelativeLocaleUrl(locale, pagePath('index'));
+// Sections of the home page, so from any other page these links lead back to it.
+const items = navSections.map((id) => ({ href: `${home}#${id}`, label: tr(`nav.${id}`) }));
 ---
 
 <nav class="main-nav" aria-label={tr('nav.label')}>
   <ul>
-    {items.map(({ href, label, current }) => (
+    {items.map(({ href, label }) => (
       <li>
-        <a href={href} aria-current={current ? 'page' : undefined}>
-          {label}
-        </a>
+        <a href={href}>{label}</a>
       </li>
     ))}
   </ul>
@@ -52,8 +49,7 @@ const items = navPages.map((page) => {
     text-decoration: none;
   }
 
-  a:hover,
-  a[aria-current='page'] {
+  a:hover {
     text-decoration: underline;
     text-decoration-color: var(--color-brand-text);
     text-decoration-thickness: 2px;

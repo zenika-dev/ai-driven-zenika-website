@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { t } from '../../i18n/utils';
+import Icon from '../ui/Icon.astro';
 import Logo from '../ui/Logo.astro';
 
 interface Props {
@@ -10,15 +11,71 @@ interface Props {
 const { locale } = Astro.props;
 const tr = t(locale);
 const copyright = tr('footer.copyright').replace('{year}', String(new Date().getFullYear()));
+// Destination pages do not exist yet, so the columns are plain text until they do.
+const columns = [
+  {
+    title: tr('footer.offers'),
+    items: [
+      tr('footer.offers.consulting'),
+      tr('footer.offers.agile'),
+      tr('footer.offers.training'),
+    ],
+  },
+  {
+    title: tr('footer.zenika'),
+    items: [tr('footer.zenika.agencies'), tr('footer.zenika.csr'), tr('footer.zenika.join')],
+  },
+];
+// Placeholder profile URLs — confirm with Zenika.
+const social = [
+  {
+    icon: 'linkedin',
+    label: tr('social.linkedin'),
+    href: 'https://www.linkedin.com/company/zenika/',
+  },
+  { icon: 'x', label: tr('social.x'), href: 'https://x.com/zenika' },
+] as const;
 ---
 
 <footer class="site-footer section--inverse">
   <div class="container">
-    <a class="brand" href={getRelativeLocaleUrl(locale)}>
-      <Logo alt={tr('site.name')} tone="light" />
-    </a>
-    <p class="tagline">{tr('footer.tagline')}</p>
-    <p class="copyright">{copyright}</p>
+    <div class="top">
+      <div class="about">
+        <a class="brand" href={getRelativeLocaleUrl(locale)}>
+          <Logo alt={tr('site.name')} tone="light" />
+        </a>
+        <p class="tagline">{tr('footer.tagline')}</p>
+      </div>
+      {columns.map(({ title, items }) => (
+        <div class="column">
+          <h2>{title}</h2>
+          <ul>
+            {items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div class="column">
+        <h2>{tr('footer.follow')}</h2>
+        <ul class="social">
+          {social.map(({ icon, label, href }) => (
+            <li>
+              <a href={href} aria-label={label} rel="noopener">
+                <Icon name={icon} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <p class="copyright">{copyright}</p>
+      <p class="legal">
+        <span>{tr('footer.legal')}</span>
+        <span>{tr('footer.privacy')}</span>
+      </p>
+    </div>
   </div>
 </footer>
 
@@ -29,22 +86,92 @@ const copyright = tr('footer.copyright').replace('{year}', String(new Date().get
     border-block-start: var(--border-width) solid var(--color-inverse-border);
   }
 
+  .top {
+    display: grid;
+    gap: var(--space-6);
+    margin-block-end: var(--space-6);
+  }
+
   .brand {
     display: inline-block;
   }
 
   .tagline {
     max-width: 22rem;
-    margin: var(--space-2) 0 var(--space-6);
+    margin: var(--space-2) 0 0;
     color: var(--color-inverse-muted);
     font-size: var(--font-size-sm);
   }
 
-  .copyright {
+  h2 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--font-size-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-2);
     margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-inverse-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .social {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .social a {
+    display: inline-grid;
+    place-items: center;
+    width: var(--icon-button-size);
+    height: var(--icon-button-size);
+    background: var(--color-inverse-text);
+    border-radius: var(--radius-pill);
+    color: var(--brand-ink);
+  }
+
+  .bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3);
     padding-block-start: var(--space-4);
     border-block-start: var(--border-width) solid var(--color-inverse-border);
     color: var(--color-inverse-muted);
     font-size: var(--font-size-xs);
+  }
+
+  .bottom p {
+    margin: 0;
+  }
+
+  .legal {
+    display: flex;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 640px) {
+    .top {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .about {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .top {
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+
+    .about {
+      grid-column: auto;
+    }
   }
 </style>

@@ -14,6 +14,17 @@ export const ctaPage: Page = 'contact';
 
 export type NavPage = (typeof navPages)[number];
 
+/** Header nav entries: sections of the home page, in order. `id` is the section's anchor. */
+export const navSections = [
+  'values',
+  'services',
+  'methodology',
+  'clients',
+  'publications',
+] as const;
+
+export type NavSection = (typeof navSections)[number];
+
 /** Path of a page relative to its locale root, as passed to `getRelativeLocaleUrl`. */
 export function pagePath(page: Page): string {
   return page === 'index' ? '' : `${page}/`;

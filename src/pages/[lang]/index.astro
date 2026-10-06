@@ -1,11 +1,11 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import Approach from '../../components/sections/Approach.astro';
 import Clients from '../../components/sections/Clients.astro';
 import ContactCta from '../../components/sections/ContactCta.astro';
-import Expertises from '../../components/sections/Expertises.astro';
 import Hero from '../../components/sections/Hero.astro';
+import Methodology from '../../components/sections/Methodology.astro';
 import Publications from '../../components/sections/Publications.astro';
+import Services from '../../components/sections/Services.astro';
 import Values from '../../components/sections/Values.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ctaPage, pagePath } from '../../i18n/routes';
@@ -17,19 +17,28 @@ const { lang } = Astro.params;
 const tr = t(lang);
 const { title, description, presentation } = await getPresentation(lang);
 const { contact } = await getContact(lang);
-const { hero, expertises, approach, values, clients, publications } = presentation;
+const { hero, values, services, methodology, clients, publications } = presentation;
+const messages = {
+  required: tr('form.required'),
+  invalidEmail: tr('form.invalidEmail'),
+};
 ---
 
 <BaseLayout title={title} description={description} locale={lang}>
   <Hero
     {...hero}
     primaryCta={{ label: hero.primaryCta, href: getRelativeLocaleUrl(lang, pagePath(ctaPage)) }}
-    secondaryCta={{ label: hero.secondaryCta, href: '#expertises' }}
+    secondaryCta={{ label: hero.secondaryCta, href: '#values' }}
   />
-  <Expertises {...expertises} />
-  <Approach {...approach} />
   <Values {...values} />
+  <Services {...services} />
+  <Methodology {...methodology} />
   <Clients {...clients} />
   <Publications {...publications} />
-  <ContactCta {...contact} email={tr('contact.email')} emailLabel={tr('contact.emailLabel')} />
+  <ContactCta
+    {...contact}
+    email={tr('contact.email')}
+    emailLabel={tr('contact.emailLabel')}
+    messages={messages}
+  />
 </BaseLayout>
