@@ -8,6 +8,10 @@ export const getStaticPaths = getLocalePaths;
 const { lang } = Astro.params;
 const tr = t(lang);
 const { title, description, contact } = await getContact(lang);
+const messages = {
+  required: tr('form.required'),
+  invalidEmail: tr('form.invalidEmail'),
+};
 ---
 
 <BaseLayout title={title} description={description} locale={lang}>
@@ -15,6 +19,7 @@ const { title, description, contact } = await getContact(lang);
     {...contact}
     email={tr('contact.email')}
     emailLabel={tr('contact.emailLabel')}
+    messages={messages}
     level={1}
     tone="default"
   />

@@ -74,8 +74,8 @@ const ctaHref = getRelativeLocaleUrl(locale, pagePath(ctaPage));
     display: none;
   }
 
-  /* Tablet: logo and tools on the first row, nav on its own row below (as in the 834px frame). */
-  @media (min-width: 640px) and (max-width: 1023px) {
+  /* Mobile and tablet: logo and tools on the first row, nav on its own row below (390px and 834px frames). */
+  @media (max-width: 1023px) {
     .inner :global(.main-nav) {
       order: 1;
       flex-basis: 100%;

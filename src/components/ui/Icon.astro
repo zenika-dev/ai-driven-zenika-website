@@ -1,7 +1,7 @@
 ---
 /** Decorative inline icons. Always hidden from assistive technology. */
 interface Props {
-  name: 'arrow-up-right' | 'arrow-right' | 'moon' | 'sun';
+  name: 'arrow-up-right' | 'arrow-right' | 'moon' | 'sun' | 'linkedin' | 'x';
   class?: string;
 }
 
@@ -22,6 +22,12 @@ const { name, class: className } = Astro.props;
   {name === 'arrow-up-right' && <path d="M7 17 17 7M8 7h9v9" />}
   {name === 'arrow-right' && <path d="M5 12h14M13 6l6 6-6 6" />}
   {name === 'moon' && <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />}
+  {name === 'linkedin' && (
+    <>
+      <path d="M6 9v10M6 5.5v.01M11 19V9m0 4a4 4 0 0 1 8 0v6" />
+    </>
+  )}
+  {name === 'x' && <path d="M4 4l16 16M20 4 4 20" />}
   {name === 'sun' && (
     <>
       <circle cx="12" cy="12" r="4" />

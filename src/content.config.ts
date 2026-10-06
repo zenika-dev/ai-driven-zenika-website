@@ -64,7 +64,18 @@ const presentation = ({ image }: SchemaContext) =>
   });
 
 /** Copy for the "Parlons-nous" block, shown on the Contact page and at the end of Presentation. */
-const contact = z.object({ ...heading, ctaLabel: z.string().min(1) });
+const field = z.object({ label: z.string().min(1), placeholder: z.string().min(1) });
+const contact = z.object({
+  ...heading,
+  ctaLabel: z.string().min(1),
+  form: z.object({
+    name: field,
+    role: field,
+    email: field,
+    project: field,
+    subject: z.string().min(1),
+  }),
+});
 
 /** Page copy: src/content/pages/{locale}/{page}.md, entry id `{locale}/{page}`. */
 const pages = defineCollection({

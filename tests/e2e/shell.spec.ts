@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { ctaPage, navPages } from '../../src/i18n/routes';
+import { ctaPage, navPages, navSections } from '../../src/i18n/routes';
 import { defaultLocale, locales, pageUrl } from '../helpers/routes';
 
 const firstLocale = defaultLocale;
@@ -19,13 +19,21 @@ test('skip link is the first focusable element and moves focus to main', async (
   await expect(page.locator('main#main')).toBeFocused();
 });
 
-test('main nav lists only the nav pages; the CTA marks the contact page', async ({ page }) => {
+test('main nav lists the nav pages then the home sections; the CTA marks the contact page', async ({
+  page,
+}) => {
   await page.goto(pageUrl(firstLocale, ctaPage));
   // The main nav is hidden below 640px (the logo links home), so count it without visibility.
   const links = page.locator('header nav.main-nav a');
-  await expect(links).toHaveCount(navPages.length);
+  await expect(links).toHaveCount(navPages.length + navSections.length);
   for (const [i, navPage] of navPages.entries()) {
     await expect(links.nth(i)).toHaveAttribute('href', pageUrl(firstLocale, navPage));
+  }
+  for (const [i, id] of navSections.entries()) {
+    await expect(links.nth(navPages.length + i)).toHaveAttribute(
+      'href',
+      `${pageUrl(firstLocale, 'index')}#${id}`,
+    );
   }
   await expect(page.locator('header a[aria-current="page"]')).toHaveAttribute(
     'href',
@@ -85,12 +93,13 @@ test('logo has an accessible name and follows the theme', async ({ page }) => {
   await expect(page.locator('footer .brand img:visible')).toHaveCount(1);
 });
 
-// Runs at the 1280px and 375px projects. (At tablet widths, 640–1023px, the nav
-// intentionally sits on its own second row, as in the 834px Figma frame.)
+// Logo and tools share one row at every width. Below 1024px the nav intentionally sits on its
+// own second row, as in the 390px and 834px Figma frames, so only desktop includes it here.
 test('header fits on one row', async ({ page }) => {
   await page.goto(pageUrl(firstLocale, 'index'));
+  const desktop = (page.viewportSize()?.width ?? 0) >= 1024;
   const controls = page.locator(
-    'header .brand, header nav a:visible, header [data-theme-toggle]:visible, header a.button',
+    `header .brand, ${desktop ? 'header nav a:visible, ' : ''}header [data-theme-toggle]:visible, header a.button`,
   );
   const boxes = (await controls.evaluateAll((elements) =>
     elements.map((el) => {
@@ -99,8 +108,8 @@ test('header fits on one row', async ({ page }) => {
     }),
   )) as { label: string; centre: number }[];
 
-  // Logo, nav link(s), FR, EN, theme toggle and CTA on desktop; nav hidden on mobile.
-  expect(boxes.length).toBeGreaterThanOrEqual(5);
+  // Logo, theme toggle and CTA, plus the nav links on desktop.
+  expect(boxes.length).toBeGreaterThanOrEqual(3);
   const [first] = boxes;
   for (const box of boxes) {
     expect(Math.abs(box.centre - (first?.centre ?? 0)), box.label).toBeLessThan(8);
