@@ -46,7 +46,7 @@ presentation:
         text: l'organisation et sa culture, les compétences
   approach:
     eyebrow: 02 / Notre approche
-    heading: Nous apportons structure, méthodologie et expertise dans les projets « mission critical ».
+    heading: Nous apportons structure, méthodologie et expertise dans les projets « mission critical ».
     commitments:
       - Une offre de services complète
       - Des convictions dans l'exécution
@@ -64,7 +64,7 @@ presentation:
       - Indépendance d'opinion, convictions open-source
       - Éthique, responsable et durable
       - Transparence, partage, proximité
-      - Amélioration continue (« Kaizen »)
+      - Amélioration continue (« Kaizen »)
     closing: Ensemble, construisons les Systèmes d'Information des 20 prochaines années.
     stats:
       - value: 600+
