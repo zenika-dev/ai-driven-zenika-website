@@ -16,6 +16,10 @@ async function navigateAndReadTransition(page: Page): Promise<boolean> {
     !(await page.evaluate(() => 'onpagereveal' in window)),
     'Cross-document View Transitions are not supported in this browser',
   );
+  // A view transition is skipped if the old page has not painted yet, which a loaded CI runner can do.
+  await page.evaluate(
+    () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+  );
   await page.locator(`header a[href="${contact}"]`).click();
   await expect(page).toHaveURL(contact);
   return (await page.evaluate(() => sessionStorage.getItem('hadViewTransition'))) === 'true';

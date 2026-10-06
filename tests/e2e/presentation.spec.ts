@@ -76,8 +76,32 @@ for (const locale of locales) {
       expect(new Set(fontHosts)).toEqual(new Set([new URL(page.url()).origin]));
     });
 
-    test('ends with the mailto contact block', async ({ page }) => {
-      await expect(page.locator('#contact a[href="mailto:info@zenika.com"]')).toHaveCount(2);
+    test('ends with the contact form and a mailto fallback', async ({ page }) => {
+      await expect(page.locator('#contact a[href="mailto:info@zenika.com"]')).toHaveCount(1);
+      const fields = page.locator('#contact form input, #contact form textarea');
+      await expect(fields).toHaveCount(4);
+      for (const field of await fields.all()) {
+        await expect(field).toHaveAccessibleName(/\S/);
+      }
+    });
+
+    test('contact form blocks an empty submit and flags the first empty field', async ({
+      page,
+    }) => {
+      await page.locator('#contact form .submit').click();
+      await expect(page.locator('#contact-name')).toBeFocused();
+      await expect(page.locator('#contact-name')).toHaveAttribute('aria-invalid', 'true');
+      await expect(page.locator('#contact .status')).toHaveText(/\S/);
+    });
+
+    test('each expertise lever has a Discover button leading to the approach section', async ({
+      page,
+    }) => {
+      const buttons = page.locator('#expertises .levers .discover');
+      await expect(buttons).toHaveCount(3);
+      for (const button of await buttons.all()) {
+        await expect(button).toHaveAttribute('href', '#approach');
+      }
     });
 
     test('does not scroll sideways', async ({ page }) => {

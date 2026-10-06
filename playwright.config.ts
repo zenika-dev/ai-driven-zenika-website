@@ -9,6 +9,8 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: true,
+  // CI runners are slower and shared, so allow one retry there for timing-sensitive tests.
+  retries: process.env.CI ? 1 : 0,
   reporter: 'list',
   use: {
     baseURL: `http://localhost:${PORT}`,

@@ -88,6 +88,14 @@ const { eyebrow, heading, points, names } = Astro.props;
     }
   }
 
+  /* Tablet frame: three chips per row. */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .logos li {
+      flex: 1 1 calc(33.333% - var(--space-4));
+      min-width: 0;
+    }
+  }
+
   /* Heading block centred against the list, as in the laptop frame. */
   @media (min-width: 1024px) {
     .grid {

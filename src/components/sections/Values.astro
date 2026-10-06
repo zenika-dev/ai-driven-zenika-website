@@ -92,6 +92,8 @@ const tones = ['brand', 'teal', 'indigo', 'ink'] as const;
   .stat {
     display: flex;
     flex-direction: column-reverse;
+    /* Pack to the top so the numbers stay on one row whatever the label length. */
+    justify-content: flex-end;
     gap: var(--space-3);
   }
 

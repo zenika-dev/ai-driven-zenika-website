@@ -1,6 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { navPages, pagePath } from '../../i18n/routes';
+import { navPages, navSections, pagePath } from '../../i18n/routes';
 import { t } from '../../i18n/utils';
 
 interface Props {
@@ -9,10 +9,18 @@ interface Props {
 
 const { locale } = Astro.props;
 const tr = t(locale);
-const items = navPages.map((page) => {
+const home = getRelativeLocaleUrl(locale, pagePath('index'));
+const pageItems = navPages.map((page) => {
   const href = getRelativeLocaleUrl(locale, pagePath(page));
   return { href, label: tr(`nav.${page}`), current: Astro.url.pathname === href };
 });
+// Sections of the home page, so from any other page these links lead back to it.
+const sectionItems = navSections.map((id) => ({
+  href: `${home}#${id}`,
+  label: tr(`nav.${id}`),
+  current: false,
+}));
+const items = [...pageItems, ...sectionItems];
 ---
 
 <nav class="main-nav" aria-label={tr('nav.label')}>
@@ -28,15 +36,10 @@ const items = navPages.map((page) => {
 </nav>
 
 <style>
-  /* Below 640px the logo is the home link and the CTA reaches Contact, as in the mockup. */
-  .main-nav {
-    display: none;
-  }
-
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-5);
+    gap: var(--space-2) var(--space-4);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -61,8 +64,8 @@ const items = navPages.map((page) => {
   }
 
   @media (min-width: 640px) {
-    .main-nav {
-      display: block;
+    ul {
+      gap: var(--space-2) var(--space-5);
     }
   }
 </style>

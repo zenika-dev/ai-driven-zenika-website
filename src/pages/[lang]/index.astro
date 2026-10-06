@@ -18,6 +18,10 @@ const tr = t(lang);
 const { title, description, presentation } = await getPresentation(lang);
 const { contact } = await getContact(lang);
 const { hero, expertises, approach, values, clients, publications } = presentation;
+const messages = {
+  required: tr('form.required'),
+  invalidEmail: tr('form.invalidEmail'),
+};
 ---
 
 <BaseLayout title={title} description={description} locale={lang}>
@@ -26,10 +30,15 @@ const { hero, expertises, approach, values, clients, publications } = presentati
     primaryCta={{ label: hero.primaryCta, href: getRelativeLocaleUrl(lang, pagePath(ctaPage)) }}
     secondaryCta={{ label: hero.secondaryCta, href: '#expertises' }}
   />
-  <Expertises {...expertises} />
+  <Expertises {...expertises} discoverLabel={tr('lever.discover')} discoverHref="#approach" />
   <Approach {...approach} />
   <Values {...values} />
   <Clients {...clients} />
   <Publications {...publications} />
-  <ContactCta {...contact} email={tr('contact.email')} emailLabel={tr('contact.emailLabel')} />
+  <ContactCta
+    {...contact}
+    email={tr('contact.email')}
+    emailLabel={tr('contact.emailLabel')}
+    messages={messages}
+  />
 </BaseLayout>

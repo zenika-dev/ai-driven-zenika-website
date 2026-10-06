@@ -1,18 +1,26 @@
 ---
-import Button from '../ui/Button.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
+import Icon from '../ui/Icon.astro';
 
 /**
- * "Parlons-nous" block. h1 on the Contact page, h2 at the end of the Presentation page.
- * `tone="inverse"` is the mockup's always-dark band; `tone="default"` follows the theme.
+ * "Parlons-nous" block with the contact form. h1 on the Contact page, h2 at the end of the
+ * Presentation page. `tone="inverse"` is the mockup's always-dark band; `tone="default"`
+ * follows the theme.
  */
+interface Field {
+  label: string;
+  placeholder: string;
+}
+
 interface Props {
   eyebrow: string;
   heading: string;
   intro: string;
   ctaLabel: string;
+  form: { name: Field; role: Field; email: Field; project: Field; subject: string };
   email: string;
   emailLabel: string;
+  messages: { required: string; invalidEmail: string };
   level?: 1 | 2;
   tone?: 'inverse' | 'default';
 }
@@ -22,8 +30,10 @@ const {
   heading,
   intro,
   ctaLabel,
+  form,
   email,
   emailLabel,
+  messages,
   level = 2,
   tone = 'inverse',
 } = Astro.props;
@@ -40,17 +50,110 @@ const Heading = level === 1 ? 'h1' : 'h2';
       <Eyebrow text={eyebrow} />
       <Heading id="contact-title">{heading}</Heading>
       <p class="intro">{intro}</p>
-    </div>
-    <div class="action">
-      <Button href={`mailto:${email}`} variant="primary">
-        {ctaLabel}
-      </Button>
       <p class="email">
         {emailLabel} <a href={`mailto:${email}`}>{email}</a>
       </p>
     </div>
+    <!-- No back end yet: submitting opens the visitor's email app with the message filled in. -->
+    <form
+      class="form"
+      novalidate
+      data-email={email}
+      data-subject={form.subject}
+      data-required={messages.required}
+      data-invalid-email={messages.invalidEmail}
+    >
+      <div class="field">
+        <label for="contact-name">{form.name.label}</label>
+        <input
+          id="contact-name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          placeholder={form.name.placeholder}
+          required
+        />
+      </div>
+      <div class="field">
+        <label for="contact-role">{form.role.label}</label>
+        <input
+          id="contact-role"
+          name="role"
+          type="text"
+          autocomplete="organization-title"
+          placeholder={form.role.placeholder}
+        />
+      </div>
+      <div class="field">
+        <label for="contact-email">{form.email.label}</label>
+        <input
+          id="contact-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder={form.email.placeholder}
+          required
+        />
+      </div>
+      <div class="field">
+        <label for="contact-project">{form.project.label}</label>
+        <textarea
+          id="contact-project"
+          name="project"
+          rows="4"
+          placeholder={form.project.placeholder}
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="submit">
+        <span>{ctaLabel}</span>
+        <Icon name="arrow-up-right" />
+      </button>
+      <p class="status" role="status">
+        {''}
+      </p>
+    </form>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-email]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.status');
+    const message = form.dataset.required ?? '';
+    const invalidEmail = form.dataset.invalidEmail ?? '';
+    const controls = [
+      ...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea'),
+    ];
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      let firstInvalid: HTMLElement | undefined;
+      for (const control of controls) {
+        const empty = control.required && control.value.trim() === '';
+        const badEmail =
+          control.type === 'email' && control.value !== '' && !control.validity.valid;
+        control.setAttribute('aria-invalid', String(empty || badEmail));
+        if ((empty || badEmail) && !firstInvalid) {
+          firstInvalid = control;
+          if (status) status.textContent = empty ? message : invalidEmail;
+        }
+      }
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+      if (status) status.textContent = '';
+      const data = new FormData(form);
+      const body = ['name', 'role', 'email', 'project']
+        .map(
+          (key) =>
+            `${controls.find((c) => c.name === key)?.labels?.[0]?.textContent}: ${data.get(key)}`,
+        )
+        .join('\n');
+      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(form.dataset.subject ?? '')}&body=${encodeURIComponent(body)}`;
+    });
+  });
+</script>
 
 <style>
   .contact.page {
@@ -62,7 +165,7 @@ const Heading = level === 1 ? 'h1' : 'h2';
   .grid {
     display: grid;
     gap: var(--space-7);
-    align-items: center;
+    align-items: start;
   }
 
   .contact {
@@ -77,14 +180,9 @@ const Heading = level === 1 ? 'h1' : 'h2';
   }
 
   .intro {
-    margin: 0;
+    margin: 0 0 var(--space-4);
+    max-width: 28rem;
     color: var(--color-text-muted);
-  }
-
-  .action {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-4);
   }
 
   .email {
@@ -93,14 +191,84 @@ const Heading = level === 1 ? 'h1' : 'h2';
     font-size: var(--font-size-sm);
   }
 
+  .form {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .field {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  label {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: transparent;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: inherit;
+    font: inherit;
+    font-size: var(--font-size-sm);
+  }
+
+  .section--inverse input,
+  .section--inverse textarea {
+    border-color: var(--color-inverse-border);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  input[aria-invalid='true'],
+  textarea[aria-invalid='true'] {
+    border-color: var(--color-brand-text);
+  }
+
+  .submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    min-height: var(--button-height);
+    padding: var(--space-2) var(--space-5);
+    background: var(--brand-red);
+    border: 0;
+    border-radius: var(--radius-pill);
+    color: var(--color-on-brand);
+    cursor: pointer;
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .submit:hover {
+    transform: translateY(-1px);
+  }
+
+  .status {
+    min-height: 1.5em;
+    margin: 0;
+    color: var(--color-brand-text);
+    font-size: var(--font-size-sm);
+  }
+
   @media (min-width: 1024px) {
     .grid {
       grid-template-columns: 1fr 1fr;
-      gap: var(--space-7);
-    }
-
-    .action {
-      justify-items: end;
+      gap: var(--space-8);
     }
   }
 </style>

@@ -1,6 +1,7 @@
 ---
 import Eyebrow from '../ui/Eyebrow.astro';
 import Highlight from '../ui/Highlight.astro';
+import Icon from '../ui/Icon.astro';
 
 interface Props {
   eyebrow: string;
@@ -11,10 +12,22 @@ interface Props {
   problems: { label: string; items: string[] };
   outcomes: { label: string; items: string[] };
   levers: { title: string; text: string }[];
+  discoverLabel: string;
+  discoverHref: string;
 }
 
-const { eyebrow, heading, highlight, conclusion, conclusionHighlight, problems, outcomes, levers } =
-  Astro.props;
+const {
+  eyebrow,
+  heading,
+  highlight,
+  conclusion,
+  conclusionHighlight,
+  problems,
+  outcomes,
+  levers,
+  discoverLabel,
+  discoverHref,
+} = Astro.props;
 const tones = ['brand', 'indigo', 'teal'] as const;
 /** Bullet colour by position: the list runs red → indigo → teal in thirds, as in the design. */
 const toneAt = (i: number, n: number) => tones[Math.min(tones.length - 1, Math.floor((i * 3) / n))];
@@ -46,8 +59,16 @@ const toneAt = (i: number, n: number) => tones[Math.min(tones.length - 1, Math.f
       <ul class="levers">
         {levers.map(({ title, text }, i) => (
           <li class:list={['lever', tones[i % tones.length]]}>
-            <h3>{title}</h3>
-            <p>{text}</p>
+            <div class="lever-copy">
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </div>
+            <a class="discover" href={discoverHref}>
+              <span>{discoverLabel}</span>
+              <span class="bubble">
+                <Icon name="arrow-up-right" />
+              </span>
+            </a>
           </li>
         ))}
       </ul>
@@ -165,6 +186,42 @@ const toneAt = (i: number, n: number) => tones[Math.min(tones.length - 1, Math.f
     --glow: var(--brand-teal);
   }
 
+  .lever-copy {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  /* "Découvrir" pill: stacked under the text on mobile, to the right from tablet. */
+  .discover {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    justify-self: start;
+    min-height: var(--target-min);
+    padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4);
+    background: var(--brand-black);
+    border-radius: var(--radius-pill);
+    color: var(--color-inverse-text);
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+  }
+
+  .discover:hover {
+    background: var(--brand-ink);
+  }
+
+  .bubble {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-inverse-text);
+    color: var(--brand-ink);
+  }
+
   .lever h3 {
     margin: 0;
     font-size: var(--font-size-card-title);
@@ -179,6 +236,16 @@ const toneAt = (i: number, n: number) => tones[Math.min(tones.length - 1, Math.f
   }
 
   @media (min-width: 640px) {
+    .lever {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--space-5);
+    }
+
+    .discover {
+      justify-self: end;
+    }
+
     .list ul {
       grid-template-columns: 1fr 1fr;
     }
