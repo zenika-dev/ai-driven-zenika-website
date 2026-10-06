@@ -7,8 +7,8 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     env:
-      CLEVER_SECRET: secrets.CLEVER_SECRET
-      CLEVER_TOKEN: secrets.CLEVER_TOKEN
+      CLEVER_SECRET: ${{secrets.CLEVER_SECRET}}
+      CLEVER_TOKEN: ${{secrets.CLEVER_TOKEN}}
       CLEVER_APP_ID: ${{ vars.CLEVER_APP_ID }}
       CURRENT_BRANCH: ${{github.head_ref || github.ref_name}}
     steps:
