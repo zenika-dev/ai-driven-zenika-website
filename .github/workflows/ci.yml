@@ -27,14 +27,39 @@ jobs:
 
       - run: npm ci
 
+      # Restored after npm ci, which recreates node_modules. Astro downloads the brand fonts
+      # from Google at build time; the font config decides which files they are.
+      - name: Cache Astro fonts
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.astro/fonts
+          key: astro-fonts-${{ runner.os }}-${{ hashFiles('astro.config.mjs') }}
+
       - name: Lint (ESLint and Prettier)
         run: npm run lint
 
       - name: Type-check (astro check)
         run: npm run check
 
-      - name: Install Playwright browsers
+      - name: Get Playwright version
+        id: playwright
+        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+
+      - name: Install Playwright browsers and system libraries
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium webkit
+
+      # The browsers are cached, but the system libraries they need are not, so install those.
+      - name: Install Playwright system libraries
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium webkit
 
       # Playwright builds the site and serves the production build itself (playwright.config.ts).
       - name: End-to-end and accessibility tests
