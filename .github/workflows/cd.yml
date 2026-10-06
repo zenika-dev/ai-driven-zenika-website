@@ -26,7 +26,7 @@ jobs:
     env:
       CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
       CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
-      CLEVER_APP_ID: ${{ vars.CLEVER_APP_ID_MAIN }}
+      CLEVER_APP_ID: ${{ vars.CLEVER_APP_ID }}
     steps:
       - name: Check deploy configuration
         run: |
