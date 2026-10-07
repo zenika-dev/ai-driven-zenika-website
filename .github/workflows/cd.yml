@@ -55,5 +55,8 @@ jobs:
       - name: Link the Clever Cloud application
         run: clever link "$CLEVER_APP_ID"
 
+      - name: List files
+        run: ls -l
+
       - name: Deploy
         run: clever deploy
