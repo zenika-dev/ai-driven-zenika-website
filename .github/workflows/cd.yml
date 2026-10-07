@@ -50,6 +50,7 @@ jobs:
 
       - run: npm ci && npm run build
       - run: ls -l
+      - run: cd dist
 
       - name: Install clever-tools
         run: npm install --global clever-tools@^4.11.0
