@@ -25,7 +25,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
-      - run: npm ci
+      - run: npm ci && npm run build
 
       # Restored after npm ci, which recreates node_modules. Astro downloads the brand fonts
       # from Google at build time; the font config decides which files they are.

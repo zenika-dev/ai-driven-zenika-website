@@ -48,9 +48,8 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - run: npm ci && npm run build
-      - run: ls -l
-      - run: cd dist
+      - run: ls -l # debug 
+      # - run: cd dist
 
       - name: Install clever-tools
         run: npm install --global clever-tools@^4.11.0
